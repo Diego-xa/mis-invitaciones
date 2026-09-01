@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Heidy | Mis XV años</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="invitacion">
+
+        <section class="portada">
+
+            <p class="pequeno">MIS XV AÑOS</p>
+
+            <h1>Heidy</h1>
+
+            <div class="linea"></div>
+
+            <p class="mensaje">
+                Hay momentos en la vida que merecen
+                ser celebrados de una manera especial.
+            </p>
+
+            <p class="fecha">
+                15 · OCTUBRE · 2026
+            </p>
+
+            <p class="hora">
+                8:00 PM
+            </p>
+
+            <button class="boton" onclick="abrirInvitacion()">
+                ✨ Abrir invitación
+            </button>
+
+        </section>
+
+
+        <section class="contenido">
+
+            <h2>Una noche especial</h2>
+
+            <p>
+                Quiero compartir contigo una noche
+                llena de momentos inolvidables.
+            </p>
+
+            <div class="contador">
+
+                <div>
+                    <strong id="dias">00</strong>
+                    <span>DÍAS</span>
+                </div>
+
+                <div>
+                    <strong id="horas">00</strong>
+                    <span>HORAS</span>
+                </div>
+
+                <div>
+                    <strong id="minutos">00</strong>
+                    <span>MIN</span>
+                </div>
+
+                <div>
+                    <strong id="segundos">00</strong>
+                    <span>SEG</span>
+                </div>
+
+            </div>
+
+
+            <div class="botones">
+
+                <a href="https://maps.google.com"
+                   target="_blank"
+                   class="boton secundario">
+                    📍 Ver ubicación
+                </a>
+
+                <a href="https://wa.me/"
+                   target="_blank"
+                   class="boton secundario">
+                    💌 Confirmar asistencia
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        function abrirInvitacion() {
+
+            document.querySelector(".contenido")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        const fechaEvento =
+    new Date("August 31, 2026 20:08:00").getTime();
+
+        function actualizarContador() {
+
+            const ahora = new Date().getTime();
+
+            const diferencia =
+                fechaEvento - ahora;
+
+
+            if (diferencia <= 0) {
+
+                document.getElementById("dias").textContent = "00";
+                document.getElementById("horas").textContent = "00";
+                document.getElementById("minutos").textContent = "00";
+                document.getElementById("segundos").textContent = "00";
+
+                return;
+
+            }
+
+
+            const dias =
+                Math.floor(
+                    diferencia /
+                    (1000 * 60 * 60 * 24)
+                );
+
+
+            const horas =
+                Math.floor(
+                    (diferencia /
+                    (1000 * 60 * 60)) % 24
+                );
+
+
+            const minutos =
+                Math.floor(
+                    (diferencia /
+                    (1000 * 60)) % 60
+                );
+
+
+            const segundos =
+                Math.floor(
+                    (diferencia /
+                    1000) % 60
+                );
+
+
+            document.getElementById("dias")
+                .textContent =
+                String(dias).padStart(2, "0");
+
+
+            document.getElementById("horas")
+                .textContent =
+                String(horas).padStart(2, "0");
+
+
+            document.getElementById("minutos")
+                .textContent =
+                String(minutos).padStart(2, "0");
+
+
+            document.getElementById("segundos")
+                .textContent =
+                String(segundos).padStart(2, "0");
+
+        }
+
+
+        actualizarContador();
+
+        setInterval(actualizarContador, 1000);
+
+    </script>
+
+</body>
+</html>
+```

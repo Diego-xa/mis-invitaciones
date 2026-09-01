@@ -1,0 +1,211 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofía | Mis XV años</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="invitacion">
+
+        <!-- PORTADA -->
+        <section class="portada">
+
+            <p class="pequeno">MIS XV AÑOS</p>
+
+            <h1>Sofía</h1>
+
+            <div class="linea"></div>
+
+            <p class="mensaje">
+                Hay momentos que se convierten
+                en recuerdos para toda la vida.
+                Quiero compartir este momento
+                tan especial contigo.
+            </p>
+
+            <p class="fecha">
+                31 · AGOSTO · 2026
+            </p>
+
+            <p class="hora">
+                8:08 PM
+            </p>
+
+            <button class="boton" onclick="abrirInvitacion()">
+                ✨ Abrir invitación
+            </button>
+
+        </section>
+
+
+        <!-- INFORMACIÓN -->
+        <section class="contenido">
+
+            <p class="pequeno">TE ESPERO</p>
+
+            <h2>Una noche para recordar</h2>
+
+            <p>
+                Será una noche muy especial y me
+                encantaría poder compartirla contigo.
+            </p>
+
+
+            <!-- CONTADOR -->
+            <div class="contador">
+
+                <div>
+                    <strong id="dias">00</strong>
+                    <span>DÍAS</span>
+                </div>
+
+                <div>
+                    <strong id="horas">00</strong>
+                    <span>HORAS</span>
+                </div>
+
+                <div>
+                    <strong id="minutos">00</strong>
+                    <span>MIN</span>
+                </div>
+
+                <div>
+                    <strong id="segundos">00</strong>
+                    <span>SEG</span>
+                </div>
+
+            </div>
+
+
+            <!-- BOTONES -->
+            <div class="botones">
+
+                <a
+                    href="https://maps.google.com"
+                    target="_blank"
+                    class="boton secundario">
+                    📍 Ver ubicación
+                </a>
+
+                <a
+                    href="https://wa.me/"
+                    target="_blank"
+                    class="boton secundario">
+                    💗 Confirmar asistencia
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        // FECHA DEL EVENTO
+        const fechaEvento =
+            new Date("August 31, 2026 20:08:00").getTime();
+
+
+        // ABRIR INVITACIÓN
+        function abrirInvitacion() {
+
+            document
+                .querySelector(".contenido")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+        }
+
+
+        // CONTADOR
+        function actualizarContador() {
+
+            const ahora =
+                new Date().getTime();
+
+            const diferencia =
+                fechaEvento - ahora;
+
+
+            if (diferencia <= 0) {
+
+                document.getElementById("dias").textContent = "00";
+                document.getElementById("horas").textContent = "00";
+                document.getElementById("minutos").textContent = "00";
+                document.getElementById("segundos").textContent = "00";
+
+                return;
+
+            }
+
+
+            const dias =
+                Math.floor(
+                    diferencia /
+                    (1000 * 60 * 60 * 24)
+                );
+
+
+            const horas =
+                Math.floor(
+                    (diferencia /
+                    (1000 * 60 * 60)) % 24
+                );
+
+
+            const minutos =
+                Math.floor(
+                    (diferencia /
+                    (1000 * 60)) % 60
+                );
+
+
+            const segundos =
+                Math.floor(
+                    (diferencia / 1000) % 60
+                );
+
+
+            document.getElementById("dias")
+                .textContent =
+                String(dias).padStart(2, "0");
+
+
+            document.getElementById("horas")
+                .textContent =
+                String(horas).padStart(2, "0");
+
+
+            document.getElementById("minutos")
+                .textContent =
+                String(minutos).padStart(2, "0");
+
+
+            document.getElementById("segundos")
+                .textContent =
+                String(segundos).padStart(2, "0");
+
+        }
+
+
+        actualizarContador();
+
+        setInterval(
+            actualizarContador,
+            1000
+        );
+
+    </script>
+
+</body>
+</html>
+```
+
