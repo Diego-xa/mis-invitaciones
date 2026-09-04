@@ -389,3 +389,39 @@ h2 {
     display: block !important;
     margin: 0 !important;
 }
+.imagen-con-boton {
+    position: relative;
+    width: 100%;
+}
+
+.imagen-con-boton img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.boton-flotante {
+    position: absolute;
+
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+
+    font-size: 18px;
+    cursor: pointer;
+}
+.boton-flotante {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 18px;
+}
