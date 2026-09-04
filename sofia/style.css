@@ -382,30 +382,10 @@ h2 {
     }
 
 }
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    background: black;
-}
-
-.pantalla {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .pantalla img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    object-position: center;
 }
-
