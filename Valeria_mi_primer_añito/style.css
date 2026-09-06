@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -25,6 +26,7 @@ body {
     height: auto;
 }
 
+/* Botón de música flotante */
 .music-container {
     position: fixed;
     top: 20px;
@@ -54,3 +56,44 @@ body {
     transform: scale(0.95);
 }
 
+/* Ocultar reproductor de audio */
+audio {
+    display: none;
+}
+
+.ultima-imagen {
+    position: relative;
+    width: 100%;
+    padding-bottom: 35px;
+}
+
+.ultima-imagen > img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.asistencia-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: block;
+}
+
+.asistencia-button img {
+    width: 220px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.asistencia-button:hover img {
+    transform: scale(1.05);
+}
+
+.asistencia-button:active img {
+    transform: scale(0.95);
+}

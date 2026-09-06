@@ -13,21 +13,36 @@
 
 <body>
 
-    <!-- Botón de música -->
+    <!-- Botón de música flotante -->
     <div class="music-container">
         <button id="musicButton" class="music-button">▶</button>
 
         <audio id="music">
-            <source src="musica.mp3/Christina Perri ~ You Are My Sunshine (lyrics).mp3" type="audio/mpeg">
+            <source src="musica/sunshine.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <!-- Galería -->
     <div class="galeria">
+
         <img src="img/parte1.png" alt="">
         <img src="img/parte2.png" alt="">
         <img src="img/parte2 (2).png" alt="">
-        <img src="img/parte4.png" alt="">
+
+        <!-- Última imagen + botón de asistencia -->
+        <div class="ultima-imagen">
+
+            <img src="img/parte4.png" alt="">
+
+            <!-- Confirmar asistencia por WhatsApp -->
+            <a href="https://wa.link/gmsiq0"
+                class="asistencia-button"
+                target="_blank">
+                <img src="img/boton_asistencia.png" alt="Confirmar asistencia">
+            </a>
+
+        </div>
+
     </div>
 
     <script>
@@ -52,4 +67,5 @@
 </body>
 
 </html>
+
 
