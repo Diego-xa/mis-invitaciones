@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +9,21 @@
 </head>
 
 <body>
-    <div class="imagen-con-boton">
-    <img src="img/tarjeta 1.jpg" alt="Sofia">
-    <img src="img/tarjeta 2.jpg" >
-
-    <a href="https://www.youtube.com/watch?v=wJw4FfyoCzw&list=RDwJw4FfyoCzw&start_radio=1" class="boton-flotante">
-        youtube
+    <a href="https://www.ejemplo.com" class="imagen-boton">
+        <img src="img/boton.png" alt="Abrir">
     </a>
-</div>
+    <div class="imagen-con-boton">
+        <img src="img/tarjeta 1.jpg" alt="Sofia">
+        <img src="img/tarjeta 2.jpg">
 
-<div class="galeria">
-    <img src="img/tarjetat2.jpg" alt="Sofia">
-</div>
+        <a href="https://www.youtube.com/watch?v=wJw4FfyoCzw&list=RDwJw4FfyoCzw&start_radio=1" class="boton-flotante">
+            youtube
+        </a>
+    </div>
+
+    <div class="galeria">
+        <img src="img/tarjetat2.jpg" alt="Sofia">
+    </div>
 
 
     <main class="invitacion">
@@ -97,17 +101,11 @@
             <!-- BOTONES -->
             <div class="botones">
 
-                <a
-                    href="https://maps.google.com"
-                    target="_blank"
-                    class="boton secundario">
+                <a href="https://maps.google.com" target="_blank" class="boton secundario">
                     📍 Ver ubicación
                 </a>
 
-                <a
-                    href="https://wa.me/"
-                    target="_blank"
-                    class="boton secundario">
+                <a href="https://wa.me/" target="_blank" class="boton secundario">
                     💗 Confirmar asistencia
                 </a>
 
@@ -169,14 +167,14 @@
             const horas =
                 Math.floor(
                     (diferencia /
-                    (1000 * 60 * 60)) % 24
+                        (1000 * 60 * 60)) % 24
                 );
 
 
             const minutos =
                 Math.floor(
                     (diferencia /
-                    (1000 * 60)) % 60
+                        (1000 * 60)) % 60
                 );
 
 
@@ -218,6 +216,6 @@
     </script>
 
 </body>
+
 </html>
 ```
-

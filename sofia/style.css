@@ -433,3 +433,25 @@ h2 {
 .boton-flotante:active {
     transform: translate(-50%, -50%) scale(0.95);
 }
+.imagen-boton {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.imagen-boton img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+}
+
+.imagen-boton:hover {
+    transform: scale(1.03);
+}
+
+.imagen-boton:active {
+    transform: scale(0.95);
+}
