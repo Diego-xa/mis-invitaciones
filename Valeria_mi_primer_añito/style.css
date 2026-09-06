@@ -64,7 +64,12 @@ audio {
 .ultima-imagen {
     position: relative;
     width: 100%;
-    padding-bottom: 35px;
+    padding-bottom:-100px;
+}
+
+.ultima-imagen {
+    position: relative;
+    width: 100%;
 }
 
 .ultima-imagen > img {
@@ -75,7 +80,7 @@ audio {
 
 .asistencia-button {
     position: absolute;
-    bottom: 0;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -97,3 +102,4 @@ audio {
 .asistencia-button:active img {
     transform: scale(0.95);
 }
+
