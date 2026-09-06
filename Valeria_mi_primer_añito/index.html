@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,14 +13,42 @@
 
 <body>
 
+    <!-- Botón de música -->
+    <div class="music-container">
+        <button id="musicButton" class="music-button">▶</button>
+
+        <audio id="music">
+            <source src="musica.mp3/Christina Perri ~ You Are My Sunshine (lyrics).mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
     <div class="galeria">
         <img src="img/parte1.png" alt="">
+        <img src="img/parte2.png" alt="">
         <img src="img/parte2 (2).png" alt="">
-        <img src="img/parte3.png" alt="">
         <img src="img/parte4.png" alt="">
-        <img src="img/tarjeta5.jpg" alt="">
     </div>
+
+    <script>
+        const music = document.getElementById("music");
+        const musicButton = document.getElementById("musicButton");
+
+        musicButton.addEventListener("click", () => {
+            if (music.paused) {
+                music.play();
+                musicButton.textContent = "⏸";
+            } else {
+                music.pause();
+                musicButton.textContent = "▶";
+            }
+        });
+
+        music.addEventListener("ended", () => {
+            musicButton.textContent = "▶";
+        });
+    </script>
 
 </body>
 
 </html>
+
