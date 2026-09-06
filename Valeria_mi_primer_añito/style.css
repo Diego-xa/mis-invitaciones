@@ -34,6 +34,7 @@ body {
     height: auto;
 }
 
+
 /* =========================
    BOTÓN DE MÚSICA
    ========================= */
@@ -55,10 +56,6 @@ body {
     border-radius: 50%;
 
     background: #f8b8cc;
-    color: white;
-
-    font-size: 22px;
-    line-height: 55px;
 
     cursor: pointer;
 
@@ -72,11 +69,58 @@ body {
         transform 0.2s ease,
         background 0.2s ease;
 
-    /* Evita el efecto de selección/tap en celulares */
+    /* Evita efectos de selección en celulares */
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
 }
+
+
+/* =========================
+   ICONO PLAY
+   ========================= */
+
+.play-icon {
+    width: 0;
+    height: 0;
+
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 15px solid white;
+
+    margin-left: 4px;
+}
+
+
+/* =========================
+   ICONO PAUSA
+   ========================= */
+
+.music-button.paused .play-icon {
+
+    width: 15px;
+    height: 18px;
+
+    border: none;
+
+    margin-left: 0;
+
+    background:
+        linear-gradient(
+            to right,
+            white 0,
+            white 5px,
+            transparent 5px,
+            transparent 10px,
+            white 10px,
+            white 15px
+        );
+}
+
+
+/* =========================
+   EFECTOS DEL BOTÓN
+   ========================= */
 
 .music-button:hover {
     transform: scale(1.08);
@@ -87,12 +131,11 @@ body {
     transform: scale(0.95);
 }
 
-/* Evita el borde que algunos navegadores ponen al tocar */
 .music-button:focus,
 .music-button:focus-visible {
     outline: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
+
 
 /* =========================
    AUDIO
@@ -101,6 +144,7 @@ body {
 audio {
     display: none;
 }
+
 
 /* =========================
    ÚLTIMA IMAGEN
@@ -116,6 +160,7 @@ audio {
     width: 100%;
     height: auto;
 }
+
 
 /* =========================
    BOTÓN WHATSAPP
@@ -156,6 +201,7 @@ audio {
     transform: scale(0.95);
 }
 
+
 /* =========================
    CELULARES PEQUEÑOS
    ========================= */
@@ -170,8 +216,6 @@ audio {
     .music-button {
         width: 48px;
         height: 48px;
-        line-height: 48px;
-        font-size: 19px;
     }
 
     .asistencia-button {
@@ -182,6 +226,7 @@ audio {
         width: 190px;
     }
 }
+
 
 /* =========================
    CELULARES GRANDES
@@ -197,6 +242,5 @@ audio {
     .music-button {
         width: 52px;
         height: 52px;
-        line-height: 52px;
     }
 }
