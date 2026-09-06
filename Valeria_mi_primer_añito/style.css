@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -10,13 +9,22 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    min-height: 100%;
     background: black;
     overflow-x: hidden;
 }
 
+body {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   GALERÍA / INVITACIÓN
+   ========================= */
+
 .galeria {
     width: 100%;
-    max-width: 430px;
+    max-width: none;
     margin: 0 auto;
 }
 
@@ -26,7 +34,10 @@ body {
     height: auto;
 }
 
-/* Botón de música flotante */
+/* =========================
+   BOTÓN DE MÚSICA
+   ========================= */
+
 .music-container {
     position: fixed;
     top: 20px;
@@ -37,14 +48,34 @@ body {
 .music-button {
     width: 55px;
     height: 55px;
+
     border: none;
+    outline: none;
+
     border-radius: 50%;
+
     background: #f8b8cc;
     color: white;
+
     font-size: 22px;
+    line-height: 55px;
+
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-    transition: transform 0.2s ease, background 0.2s ease;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+
+    /* Evita el efecto de selección/tap en celulares */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .music-button:hover {
@@ -56,16 +87,24 @@ body {
     transform: scale(0.95);
 }
 
-/* Ocultar reproductor de audio */
+/* Evita el borde que algunos navegadores ponen al tocar */
+.music-button:focus,
+.music-button:focus-visible {
+    outline: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================
+   AUDIO
+   ========================= */
+
 audio {
     display: none;
 }
 
-.ultima-imagen {
-    position: relative;
-    width: 100%;
-    padding-bottom:-100px;
-}
+/* =========================
+   ÚLTIMA IMAGEN
+   ========================= */
 
 .ultima-imagen {
     position: relative;
@@ -78,20 +117,34 @@ audio {
     height: auto;
 }
 
+/* =========================
+   BOTÓN WHATSAPP
+   ========================= */
+
 .asistencia-button {
     position: absolute;
+
     bottom: 80px;
     left: 50%;
+
     transform: translateX(-50%);
+
     z-index: 10;
+
     display: block;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 .asistencia-button img {
     width: 220px;
+    max-width: 70vw;
     height: auto;
+
     display: block;
+
     cursor: pointer;
+
     transition: transform 0.2s ease;
 }
 
@@ -103,3 +156,47 @@ audio {
     transform: scale(0.95);
 }
 
+/* =========================
+   CELULARES PEQUEÑOS
+   ========================= */
+
+@media (max-width: 380px) {
+
+    .music-container {
+        top: 12px;
+        right: 12px;
+    }
+
+    .music-button {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 19px;
+    }
+
+    .asistencia-button {
+        bottom: 50px;
+    }
+
+    .asistencia-button img {
+        width: 190px;
+    }
+}
+
+/* =========================
+   CELULARES GRANDES
+   ========================= */
+
+@media (min-width: 381px) and (max-width: 600px) {
+
+    .music-container {
+        top: 16px;
+        right: 16px;
+    }
+
+    .music-button {
+        width: 52px;
+        height: 52px;
+        line-height: 52px;
+    }
+}
