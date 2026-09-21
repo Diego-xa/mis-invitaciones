@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: Georgia, serif;
+}
+
+.jardin {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 20%, #ffe8f1 0%, transparent 35%),
+        linear-gradient(
+            to bottom,
+            #ffdce9 0%,
+            #f8c8d9 45%,
+            #d99a9e 100%
+        );
+}
+
+/* -------------------------
+   MENSAJE
+------------------------- */
+
+.mensaje {
+    position: absolute;
+    z-index: 10;
+
+    top: 18%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(90%, 600px);
+
+    text-align: center;
+
+    color: #6d4050;
+
+    animation: aparecer 3s ease forwards;
+}
+
+.pequeno {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: clamp(2rem, 7vw, 4rem);
+    line-height: 1.15;
+    font-weight: normal;
+}
+
+.corazon {
+    margin-top: 20px;
+    font-size: 2rem;
+
+    animation: latido 2s infinite ease-in-out;
+}
+
+/* -------------------------
+   FLORES
+------------------------- */
+
+#flores {
+    position: absolute;
+    inset: 0;
+}
+
+/* tallo */
+
+.flor {
+    position: absolute;
+    bottom: -20px;
+
+    width: 100px;
+    height: 250px;
+
+    transform-origin: bottom center;
+
+    animation: balanceo 5s ease-in-out infinite;
+}
+
+.tallo {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    width: 6px;
+    height: 190px;
+
+    transform: translateX(-50%);
+
+    background: linear-gradient(
+        to right,
+        #3d7a43,
+        #65a85b,
+        #315f37
+    );
+
+    border-radius: 10px;
+}
+
+/* hojas */
+
+.hoja {
+    position: absolute;
+
+    width: 45px;
+    height: 22px;
+
+    background: #579451;
+
+    border-radius: 100% 0 100% 0;
+}
+
+.hoja.izquierda {
+    left: 8px;
+    bottom: 70px;
+    transform: rotate(-30deg);
+}
+
+.hoja.derecha {
+    right: 8px;
+    bottom: 105px;
+    transform: rotate(30deg) scaleX(-1);
+}
+
+/* cabeza de la flor */
+
+.cabeza {
+    position: absolute;
+
+    left: 50%;
+    top: 30px;
+
+    width: 75px;
+    height: 75px;
+
+    transform: translateX(-50%);
+}
+
+/* pétalos */
+
+.petalo {
+    position: absolute;
+
+    width: 35px;
+    height: 55px;
+
+    left: 50%;
+    top: 50%;
+
+    transform-origin: 50% 100%;
+
+    background: linear-gradient(
+        135deg,
+        #fff36a,
+        #f4c928
+    );
+
+    border-radius: 50% 50% 45% 45%;
+
+    box-shadow: 0 2px 8px rgba(180, 120, 0, 0.15);
+}
+
+.petalo:nth-child(1) {
+    transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.petalo:nth-child(2) {
+    transform: translate(-50%, -100%) rotate(45deg);
+}
+
+.petalo:nth-child(3) {
+    transform: translate(-50%, -100%) rotate(90deg);
+}
+
+.petalo:nth-child(4) {
+    transform: translate(-50%, -100%) rotate(135deg);
+}
+
+.petalo:nth-child(5) {
+    transform: translate(-50%, -100%) rotate(180deg);
+}
+
+.petalo:nth-child(6) {
+    transform: translate(-50%, -100%) rotate(225deg);
+}
+
+.petalo:nth-child(7) {
+    transform: translate(-50%, -100%) rotate(270deg);
+}
+
+.petalo:nth-child(8) {
+    transform: translate(-50%, -100%) rotate(315deg);
+}
+
+/* centro */
+
+.centro {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 28px;
+    height: 28px;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #8d5b13 0 30%,
+            #c98b16 31% 70%,
+            #f1c52e 71%
+        );
+
+    z-index: 5;
+}
+
+/* -------------------------
+   PETALOS QUE CAEN
+------------------------- */
+
+.petalo-caido {
+    position: absolute;
+
+    top: -30px;
+
+    width: 12px;
+    height: 18px;
+
+    background: #ffd92f;
+
+    border-radius: 100% 0 100% 0;
+
+    opacity: 0.8;
+
+    animation:
+        caer linear forwards,
+        girar 3s ease-in-out infinite;
+}
+
+/* -------------------------
+   ANIMACIONES
+------------------------- */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes latido {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes balanceo {
+    0%, 100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes caer {
+
+    from {
+        top: -30px;
+        transform: translateX(0) rotate(0deg);
+    }
+
+    to {
+        top: 110vh;
+        transform: translateX(120px) rotate(360deg);
+    }
+}
+
+@keyframes girar {
+
+    0% {
+        margin-left: 0;
+    }
+
+    50% {
+        margin-left: -30px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}
+
+/* -------------------------
+   CELULAR
+------------------------- */
+
+@media (max-width: 600px) {
+
+    .mensaje {
+        top: 13%;
+    }
+
+    .pequeno {
+        font-size: 1rem;
+    }
+
+    .flor {
+        transform: scale(0.8);
+    }
+}
