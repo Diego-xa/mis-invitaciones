@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Valeria - Mi primer añito</title>
+
+    <link rel="icon" type="image/png" href="img/icono.png">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="music-container">
+        <button id="musicButton" class="music-button" aria-label="Reproducir música">
+            <span class="play-icon"></span>
+        </button>
+
+        <audio id="music">
+            <source src="musica.mp3/Christina Perri ~ You Are My Sunshine (lyrics).mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="galeria">
+
+        <img src="img/muestra_matrimonio_parte1.png" alt="">
+        <img src="img/muestra_matrimonio_parte2.png" alt="">
+        <img src="img/muestra_matrimonio_parte3.png" alt="">
+      
+        <div class="ultima-imagen">
+
+            <img src="img/parte4.png" alt="">
+
+            <a href="https://wa.link/gmsiq0"
+                class="asistencia-button"
+                target="_blank">
+                <img src="img/boton_asistencia.png" alt="Confirmar asistencia">
+            </a>
+
+        </div>
+
+    </div>
+
+    <script>
+        const music = document.getElementById("music");
+        const musicButton = document.getElementById("musicButton");
+
+        musicButton.addEventListener("click", () => {
+
+            if (music.paused) {
+
+                music.play();
+
+                musicButton.classList.add("paused");
+                musicButton.setAttribute("aria-label", "Pausar música");
+
+            } else {
+
+                music.pause();
+
+                musicButton.classList.remove("paused");
+                musicButton.setAttribute("aria-label", "Reproducir música");
+
+            }
+        });
+
+        music.addEventListener("ended", () => {
+
+            musicButton.classList.remove("paused");
+            musicButton.setAttribute("aria-label", "Reproducir música");
+
+        });
+    </script>
+
+</body>
+
+</html>
