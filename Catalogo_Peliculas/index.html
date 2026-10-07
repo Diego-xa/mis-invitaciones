@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Películas a pedido, estrenos y películas recientes."
+    >
+
+    <title>Películas a pedido</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="hero">
+
+        <div class="container hero-content">
+
+            <div class="hero-text">
+
+                <span class="eyebrow">
+                    🎬 PELÍCULAS A PEDIDO
+                </span>
+
+                <h1>
+                    Películas y<br>
+                    <span>estrenos recientes</span>
+                </h1>
+
+                <p>
+                    Descarga películas a pedido,
+                    incluyendo estrenos y películas
+                    recientes.
+                </p>
+
+                <a
+                    href="#peliculas"
+                    class="hero-button"
+                >
+                    Ver películas
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+    ========================== -->
+
+    <main class="container">
+
+        <!-- BUSCADOR -->
+
+        <section class="search-section">
+
+            <div>
+
+                <h2>
+                    🎬 Películas
+                </h2>
+
+                <p>
+                    Busca una película o revisa los estrenos.
+                </p>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <span>🔎</span>
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Buscar película..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </section>
+
+
+        <!-- CATALOGO -->
+
+        <section
+            id="peliculas"
+            class="catalog-section"
+        >
+
+            <div class="section-title">
+
+                <div>
+
+                    <span class="section-label">
+                        AHORA DISPONIBLES
+                    </span>
+
+                    <h2>
+                        🔥 Estrenos
+                    </h2>
+
+                </div>
+
+                <span
+                    id="movieCount"
+                    class="movie-count"
+                >
+                    0 películas
+                </span>
+
+            </div>
+
+
+            <div
+                id="moviesGrid"
+                class="movies-grid"
+            ></div>
+
+
+            <!-- SIN RESULTADOS -->
+
+            <div
+                id="noResults"
+                class="no-results hidden"
+            >
+
+                <span>🎬</span>
+
+                <h3>
+                    No encontramos esa película
+                </h3>
+
+                <p>
+                    Puedes escribirme y pedirme la película
+                    que estás buscando.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- PEDIDO -->
+
+        <section class="request-section">
+
+            <div class="request-content">
+
+                <span class="request-icon">
+                    🎬
+                </span>
+
+                <div>
+
+                    <span class="section-label">
+                        ¿NO LA ENCUENTRAS?
+                    </span>
+
+                    <h2>
+                        Puedes pedirla
+                    </h2>
+
+                    <p>
+                        Si no aparece en el catálogo,
+                        dime qué película buscas y
+                        la puedo buscar por ti.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <a
+                id="generalWhatsapp"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="request-button"
+            >
+                💬 Pedir una película
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <strong>
+                🎬 Películas a pedido
+            </strong>
+
+            <span>
+                © 2026
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
