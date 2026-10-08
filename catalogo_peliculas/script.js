@@ -14,7 +14,7 @@
     guiones
 */
 
-const NUMERO_WHATSAPP = "51999999999";
+const NUMERO_WHATSAPP = "51996347326";
 
 
 /* =========================================
