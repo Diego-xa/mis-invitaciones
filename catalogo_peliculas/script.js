@@ -24,18 +24,20 @@ const NUMERO_WHATSAPP = "51996347326";
 const peliculas = [
 
     {
-        titulo: "Superman",
+        titulo: "Spider-Man: Un nuevo día",
         anio: "2026",
-        genero: "Acción · Aventura · Ciencia ficción",
-        imagen: "img/pelicula-1.webp",
+        calidad: "full hd",
+        genero: "Marvel - Superhéroe - Acción ",
+        imagen: "img/spider_man_un_nuevo_dia_2026.webp",
         descripcion:
-            "Una nueva aventura del legendario héroe."
+            "Tras el Día del Juicio Final, Peter Parker intenta centrarse en la universidad y abandonar a Spider-Man. Cuando una nueva amenaza pone en peligro a sus amigos, debe romper su promesa y volver al traje."
     },
 
 
     {
         titulo: "Película de prueba",
         anio: "2026",
+        calidad:  "full hd",
         genero: "Terror · Suspenso",
         imagen: "img/pelicula-2.webp",
         descripcion:
@@ -107,10 +109,9 @@ function mostrarPeliculas(lista) {
 
 
     movieCount.textContent =
-        `${lista.length} ${
-            lista.length === 1
-                ? "película"
-                : "películas"
+        `${lista.length} ${lista.length === 1
+            ? "película"
+            : "películas"
         }`;
 
 
@@ -154,9 +155,17 @@ function mostrarPeliculas(lista) {
                         loading="lazy"
                     >
 
+                    <div class="movie-meta">
                     <span class="movie-year">
-                        ${pelicula.anio}
+                    ${pelicula.anio}
                     </span>
+
+                    <span class="movie-quality">
+                    ${pelicula.calidad}
+                    </span>
+                    </div>
+                    
+                    
 
                 </div>
 
@@ -181,9 +190,9 @@ function mostrarPeliculas(lista) {
                     <a
                         class="movie-button"
                         href="${crearEnlaceWhatsApp(
-                            pelicula.titulo,
-                            pelicula.anio
-                        )}"
+                pelicula.titulo,
+                pelicula.anio
+            )}"
                         target="_blank"
                         rel="noopener noreferrer"
                     >
