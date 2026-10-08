@@ -35,23 +35,23 @@ const peliculas = [
 
 
     {
-        titulo: "Película de prueba",
+        titulo: "Noche del demonio: están entre nosotros",
         anio: "2026",
         calidad:  "full hd",
         genero: "Terror · Suspenso",
-        imagen: "img/pelicula-2.webp",
+        imagen: "img/noche_del_demonio_2026.webp",
         descripcion:
-            "Una breve descripción de esta película."
+            "La franquicia de terror regresa a sus raíces sobrenaturales. Un nuevo protagonista enfrenta apariciones misteriosas que van mucho más allá de los fenómenos clásicos de fantasmas. El mal encuentra nuevas formas de entrar a la realidad."
     },
 
 
     {
-        titulo: "Otra película",
+        titulo: "Las cartas de la vida (2026)",
         anio: "2026",
-        genero: "Comedia",
-        imagen: "img/pelicula-3.webp",
+        genero: "Drama",
+        imagen: "img/Las cartas de la vida (2026).webp",
         descripcion:
-            "Una divertida película para disfrutar."
+            "Una madre soltera en dificultades se cruza con un ex prisionero que busca redención, y juntos descubren fortaleza en su inesperada conexión.."
     }
 
 ];
