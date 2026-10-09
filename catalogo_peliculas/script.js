@@ -48,10 +48,30 @@ const peliculas = [
     {
         titulo: "Las cartas de la vida (2026)",
         anio: "2026",
+        calidad:  "full hd",
         genero: "Drama",
         imagen: "img/Las cartas de la vida (2026).webp",
         descripcion:
             "Una madre soltera en dificultades se cruza con un ex prisionero que busca redención, y juntos descubren fortaleza en su inesperada conexión.."
+    },
+
+
+    {
+        titulo: "Película 4",
+        anio: "2026",
+        calidad: "full hd",
+        genero: "Terror · Suspenso",
+        imagen: "img/pelicula_4_2026.webp",
+        descripcion: "Descripción de la película."
+    },
+
+    {
+        titulo: "Película 5",
+        anio: "2026",
+        calidad: "full hd",
+        genero: "Comedia",
+        imagen: "img/pelicula_5_2026.webp",
+        descripcion: "Descripción de la película."
     }
 
 ];
