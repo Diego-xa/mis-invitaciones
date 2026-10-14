@@ -6,7 +6,6 @@
 const NUMERO_WHATSAPP = "51996347326";
 const anioEstrenos = "2026";
 
-// REEMPLAZA ESTA DIRECCIÓN POR LA DE TU WORKER
 const API_CATALOGO =
     "https://catalogo-api.TUUSUARIO.workers.dev/api/pelicula";
 
@@ -23,8 +22,8 @@ const peliculas = [
         calidad: "full hd",
         genero: "Marvel - Superhéroe - Acción - Aventura",
         imagen: "img/Spider Man Brand New Day.webp",
-        descripcion:
-            "El mundo ha olvidado quién es Peter Parker, pero él sigue protegiendo Nueva York. Cuando una nueva amenaza aparece y sus poderes comienzan a cambiar, deberá descubrir qué está ocurriendo antes de perder el control"
+        muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
+        descripcion: "El mundo ha olvidado quién es Peter Parker, pero él sigue protegiendo Nueva York. Cuando una nueva amenaza aparece y sus poderes comienzan a cambiar, deberá descubrir qué está ocurriendo antes de perder el control"
     },
     {
         titulo: "Noche del demonio - Están entre nosotros",
@@ -34,11 +33,10 @@ const peliculas = [
         enlaceCalificacion: "https://www.imdb.com/title/tt32393988/",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Terror · Suspenso · Sobrenatural",
+        genero: "Terror - Suspenso - Sobrenatural",
         imagen: "img/Noche del demonio - Están entre nosotros.webp",
         muestra: "",
-        descripcion:
-            "Gemma descubre que puede entrar en el más allá y traer de vuelta a sus habitantes. Pero cuando fuerzas oscuras descubren su poder, algo aterrador comienza a cruzar al mundo de los vivos"
+        descripcion: "Gemma descubre que puede entrar en el más allá y traer de vuelta a sus habitantes. Pero cuando fuerzas oscuras descubren su poder, algo aterrador comienza a cruzar al mundo de los vivos"
     },
     {
         titulo: "Las cartas de la vida (2026)",
@@ -51,8 +49,7 @@ const peliculas = [
         genero: "Drama - Romance",
         imagen: "img/Las cartas de la vida (2026).webp",
         muestra: "",
-        descripcion:
-            "Una madre soltera comienza a intercambiar cartas con un preso que busca una segunda oportunidad. Lo que nace entre palabras y secretos cambiará sus vidas de una forma que ninguno imaginaba"
+        descripcion: "Una madre soltera comienza a intercambiar cartas con un preso que busca una segunda oportunidad. Lo que nace entre palabras y secretos cambiará sus vidas de una forma que ninguno imaginaba"
     },
     {
         titulo: "Coyote vs. Acme",
@@ -62,8 +59,8 @@ const peliculas = [
         calidad: "full hd",
         genero: "Animación - Comedia - Aventura",
         imagen: "img/Coyote vs. Acme.webp",
-        descripcion:
-            "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
+        muestra: "",
+        descripcion: "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
     },
     {
         titulo: "Proyecto Fin Del Mundo",
@@ -73,8 +70,8 @@ const peliculas = [
         calidad: "full hd",
         genero: "Ciencia Ficción - Aventura - Drama",
         imagen: "img/Proyecto Fin Del Mundo.webp",
-        descripcion:
-            "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
+        muestra: "",
+        descripcion: "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
     },
     {
         titulo: "Super Mario Galaxy",
@@ -84,19 +81,22 @@ const peliculas = [
         calidad: "full hd",
         genero: "Animación - Aventura - Comedia - Fantasía",
         imagen: "img/Super Mario Galaxy.webp",
-        descripcion:
-            "Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
-    },
+        muestra: "",
+        descripcion: "Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
+    }
 ];
 
 /* =========================================
-   CONSULTA AUTOMÁTICA DE OMDb
+   CONSULTA OPCIONAL DE OMDb
 ========================================= */
 
-// Evita repetir solicitudes para una misma película.
 const consultasRealizadas = new Map();
 
 async function obtenerDatosAutomaticos(pelicula) {
+    if (!API_CATALOGO || API_CATALOGO.includes("TUUSUARIO")) {
+        return null;
+    }
+
     const titulo = pelicula.consultaOmdb || pelicula.titulo;
     const clave = `${titulo}-${pelicula.anio}`;
 
@@ -111,27 +111,17 @@ async function obtenerDatosAutomaticos(pelicula) {
                 anio: String(pelicula.anio)
             });
 
-            const respuesta = await fetch(
-                `${API_CATALOGO}?${parametros}`
-            );
+            const respuesta = await fetch(`${API_CATALOGO}?${parametros}`);
 
-            if (!respuesta.ok) {
-                throw new Error(`HTTP ${respuesta.status}`);
-            }
+            if (!respuesta.ok) return null;
 
             const datos = await respuesta.json();
 
-            if (datos.error) {
-                throw new Error(datos.error);
-            }
+            if (datos.error) return null;
 
             return datos;
         } catch (error) {
-            console.warn(
-                `No se pudieron obtener datos de ${pelicula.titulo}:`,
-                error.message
-            );
-
+            console.warn("No se pudieron cargar datos externos:", error);
             return null;
         }
     })();
@@ -141,52 +131,40 @@ async function obtenerDatosAutomaticos(pelicula) {
 }
 
 async function cargarDatosAutomaticos() {
-    await Promise.all(
-        peliculas.map(async pelicula => {
-            pelicula.consultando = true;
+    await Promise.all(peliculas.map(async pelicula => {
+        const datos = await obtenerDatosAutomaticos(pelicula);
 
-            const datos = await obtenerDatosAutomaticos(pelicula);
+        if (!datos) return;
 
-            if (datos) {
-                const nota = Number(datos.puntuacion);
+        const nota = Number(datos.puntuacion);
 
-                pelicula.calificacion =
-                    datos.puntuacion !== null &&
-                        datos.puntuacion !== "" &&
-                        Number.isFinite(nota) &&
-                        nota >= 0 &&
-                        nota <= 10
-                        ? nota
-                        : null;
+        if (
+            datos.puntuacion !== null &&
+            datos.puntuacion !== "" &&
+            Number.isFinite(nota) &&
+            nota >= 0 &&
+            nota <= 10
+        ) {
+            pelicula.calificacion = nota;
+        }
 
-                pelicula.enlaceCalificacion = datos.enlace || "";
+        if (datos.enlace) {
+            pelicula.enlaceCalificacion = datos.enlace;
+        }
 
-                if (datos.poster) {
-                    pelicula.posterAutomatico = datos.poster;
-                }
-            }
-
-            pelicula.consultando = false;
-        })
-    );
+        if (datos.poster) {
+            pelicula.posterAutomatico = datos.poster;
+        }
+    }));
 
     actualizarCatalogo();
 }
 
 /* =========================================
-   CATEGORÍAS
+   CATEGORÍAS Y ELEMENTOS HTML
 ========================================= */
 
-const categoriasPrincipales = [
-    "Drama",
-    "Acción",
-    "Comedia",
-    "Animada"
-];
-
-/* =========================================
-   ELEMENTOS HTML
-========================================= */
+const categoriasPrincipales = ["Drama", "Acción", "Comedia", "Animada"];
 
 const moviesGrid = document.getElementById("moviesGrid");
 const searchInput = document.getElementById("searchInput");
@@ -224,9 +202,7 @@ function obtenerGeneros(pelicula) {
 }
 
 function crearEnlaceWhatsApp(titulo, anio) {
-    const mensaje =
-        `Hola 👋, quisiera la película "${titulo} (${anio})" 🎬`;
-
+    const mensaje = `Hola 👋, quisiera la película "${titulo} (${anio})" 🎬`;
     return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
@@ -252,7 +228,10 @@ function obtenerEnlaceReproduccion(enlace) {
 ========================================= */
 
 function abrirMuestra(pelicula) {
-    if (!sampleModal || !sampleFrame || !sampleTitle) return;
+    if (!sampleModal || !sampleFrame || !sampleTitle) {
+        alert("No se encontró el reproductor. Revisa el bloque sampleModal de index.html.");
+        return;
+    }
 
     const enlace = obtenerEnlaceReproduccion(pelicula.muestra);
 
@@ -286,7 +265,9 @@ if (closeSample) {
 if (sampleModal) {
     const fondo = sampleModal.querySelector(".sample-modal-backdrop");
 
-    if (fondo) fondo.addEventListener("click", cerrarMuestra);
+    if (fondo) {
+        fondo.addEventListener("click", cerrarMuestra);
+    }
 }
 
 document.addEventListener("keydown", evento => {
@@ -300,7 +281,7 @@ document.addEventListener("keydown", evento => {
 });
 
 /* =========================================
-   PESTAÑAS DE GÉNERO
+   PESTAÑAS
 ========================================= */
 
 function obtenerCategorias() {
@@ -309,7 +290,6 @@ function obtenerCategorias() {
     peliculas.forEach(pelicula => {
         obtenerGeneros(pelicula).forEach(genero => {
             const clave = normalizarTexto(genero);
-
             if (clave && !encontradas.has(clave)) {
                 encontradas.set(clave, genero);
             }
@@ -343,14 +323,10 @@ function crearPestanas() {
 
     pestanas.forEach(pestana => {
         const boton = document.createElement("button");
-
         boton.type = "button";
         boton.className = "genre-tab";
         boton.textContent = pestana.nombre;
-        boton.setAttribute(
-            "aria-pressed",
-            String(categoriaActiva === pestana.id)
-        );
+        boton.setAttribute("aria-pressed", String(categoriaActiva === pestana.id));
 
         if (categoriaActiva === pestana.id) {
             boton.classList.add("active");
@@ -375,7 +351,6 @@ function perteneceACategoria(pelicula) {
 
     if (categoriaActiva.startsWith("genero:")) {
         const buscado = categoriaActiva.slice(7);
-
         return obtenerGeneros(pelicula).some(
             genero => normalizarTexto(genero) === buscado
         );
@@ -426,39 +401,34 @@ function actualizarTitulo() {
 }
 
 /* =========================================
-   CALIFICACIÓN AUTOMÁTICA
+   ESTRELLAS
 ========================================= */
 
 function crearCalificacion(pelicula) {
     const contenedor = document.createElement("div");
     contenedor.className = "movie-rating";
 
-    if (pelicula.consultando) {
-        contenedor.classList.add("rating-unavailable");
-        contenedor.textContent = "Buscando calificación…";
-        return contenedor;
-    }
+    const notaValor = Number(pelicula.calificacion);
 
     if (
-        typeof pelicula.calificacion !== "number" ||
-        !Number.isFinite(pelicula.calificacion)
+        pelicula.calificacion === null ||
+        pelicula.calificacion === undefined ||
+        !Number.isFinite(notaValor)
     ) {
         contenedor.classList.add("rating-unavailable");
         contenedor.textContent = "Sin calificación";
         return contenedor;
     }
 
-    const estrellasLlenas = Math.round(pelicula.calificacion / 2);
+    const estrellasLlenas = Math.max(0, Math.min(5, Math.round(notaValor / 2)));
 
     const estrellas = document.createElement("span");
     estrellas.className = "rating-stars";
-    estrellas.textContent =
-        "★".repeat(estrellasLlenas) +
-        "☆".repeat(5 - estrellasLlenas);
+    estrellas.textContent = "★".repeat(estrellasLlenas) + "☆".repeat(5 - estrellasLlenas);
 
     const nota = document.createElement("span");
     nota.className = "rating-score";
-    nota.textContent = `${pelicula.calificacion.toFixed(1)}/10`;
+    nota.textContent = `${notaValor.toFixed(1)}/10`;
 
     contenedor.append(estrellas, nota);
 
@@ -469,7 +439,6 @@ function crearCalificacion(pelicula) {
         fuente.target = "_blank";
         fuente.rel = "noopener noreferrer";
         fuente.textContent = "IMDb";
-
         contenedor.appendChild(fuente);
     }
 
@@ -501,21 +470,16 @@ function mostrarPeliculas(lista) {
         imagen.className = "movie-poster";
         imagen.alt = `Póster de ${pelicula.titulo}`;
         imagen.loading = "lazy";
-
-        // Primero intenta usar el póster de la API.
-        // Si no está disponible, usa tu imagen local.
         imagen.src = pelicula.posterAutomatico || pelicula.imagen;
 
         imagen.addEventListener("error", () => {
-            if (
-                pelicula.posterAutomatico &&
-                imagen.src !== new URL(pelicula.imagen, document.baseURI).href
-            ) {
-                imagen.src = pelicula.imagen;
-                return;
-            }
+            const posterLocal = new URL(pelicula.imagen, document.baseURI).href;
 
-            imagen.alt = `Imagen no disponible: ${pelicula.titulo}`;
+            if (imagen.src !== posterLocal) {
+                imagen.src = pelicula.imagen;
+            } else {
+                imagen.alt = `Imagen no disponible: ${pelicula.titulo}`;
+            }
         });
 
         const meta = document.createElement("div");
@@ -594,7 +558,7 @@ function actualizarCatalogo() {
 }
 
 /* =========================================
-   EVENTOS E INICIO
+   INICIO
 ========================================= */
 
 if (searchInput) {
