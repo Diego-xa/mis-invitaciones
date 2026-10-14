@@ -23,6 +23,7 @@
 <body>
 
     <!-- ENCABEZADO -->
+
     <header class="hero">
 
         <div class="container hero-content">
@@ -56,9 +57,11 @@
 
 
     <!-- CONTENIDO PRINCIPAL -->
+
     <main class="container">
 
         <!-- BUSCADOR -->
+
         <section class="search-section">
 
             <div>
@@ -89,12 +92,14 @@
 
 
         <!-- CATÁLOGO -->
+
         <section
             id="peliculas"
             class="catalog-section"
         >
 
             <!-- PESTAÑAS GENERADAS POR JAVASCRIPT -->
+
             <nav
                 id="genreTabs"
                 class="genre-tabs"
@@ -103,6 +108,7 @@
 
 
             <!-- TÍTULO Y CONTADOR -->
+
             <div class="section-title">
 
                 <div>
@@ -115,7 +121,7 @@
                     </span>
 
                     <h2 id="sectionHeading">
-                        Estrenos 2026
+                         Estrenos 2026
                     </h2>
 
                 </div>
@@ -131,6 +137,7 @@
 
 
             <!-- PELÍCULAS -->
+
             <div
                 id="moviesGrid"
                 class="movies-grid"
@@ -138,12 +145,13 @@
 
 
             <!-- SIN RESULTADOS -->
+
             <div
                 id="noResults"
                 class="no-results hidden"
             >
 
-                <span>🔎</span>
+                <span></span>
 
                 <h3>
                     No encontramos esa película
@@ -160,6 +168,7 @@
 
 
         <!-- PEDIDO POR WHATSAPP -->
+
         <section class="request-section">
 
             <div class="request-content">
@@ -201,65 +210,48 @@
     </main>
 
 
-    <!-- =====================================
-         REPRODUCTOR DE MUESTRAS DE GOOGLE DRIVE
-    ====================================== -->
-    <div
-        id="sampleModal"
-        class="sample-modal hidden"
-        aria-hidden="true"
-    >
+    <!-- JAVASCRIPT -->
 
-        <!-- Fondo oscuro -->
-        <div class="sample-modal-backdrop"></div>
-
-        <!-- Ventana del reproductor -->
-        <section
-            class="sample-modal-content"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="sampleTitle"
-        >
-
-            <!-- Cabecera -->
-            <div class="sample-modal-header">
-
-                <h2 id="sampleTitle">
-                    Ver muestra
-                </h2>
-
-                <button
-                    type="button"
-                    id="closeSample"
-                    class="sample-close-button"
-                    aria-label="Cerrar reproductor"
-                >
-                    &times;
-                </button>
-
-            </div>
-
-            <!-- Video -->
-            <div class="sample-video-container">
-
-                <iframe
-                    id="sampleFrame"
-                    title="Reproductor de muestra"
-                    src="about:blank"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowfullscreen
-                    loading="lazy"
-                ></iframe>
-
-            </div>
-
-        </section>
-
-    </div>
-
-
-    <!-- JAVASCRIPT: DEBE IR DESPUÉS DEL REPRODUCTOR -->
     <script src="script.js"></script>
+<!-- REPRODUCTOR DE MUESTRAS -->
+<div id="sampleModal" class="sample-modal hidden">
 
+    <div class="sample-modal-backdrop"></div>
+
+    <section
+        class="sample-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sampleTitle"
+    >
+        <div class="sample-modal-header">
+            <h2 id="sampleTitle">Ver muestra</h2>
+
+            <button
+                type="button"
+                id="closeSample"
+                class="sample-close-button"
+                aria-label="Cerrar reproductor"
+            >
+                &times;
+            </button>
+        </div>
+
+        <div class="sample-video-container">
+            <iframe
+                id="sampleFrame"
+                title="Reproductor de muestra"
+                src="about:blank"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+            ></iframe>
+        </div>
+    </section>
+
+</div>
 </body>
+
+
+
 </html>

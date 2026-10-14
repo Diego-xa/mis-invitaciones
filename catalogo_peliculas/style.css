@@ -429,7 +429,7 @@ input {
     gap: 8px;
     width: 100%;
     margin-top: auto;
-    padding-bottom: 10px;
+    padding-bottom: 1px;
 }
 
 .movie-button {
@@ -779,7 +779,7 @@ body.sample-modal-open {
         font-size: 11px;
         min-height: 50px;
     }
-    
+
     .movie-rating {
         gap: 4px;
     }

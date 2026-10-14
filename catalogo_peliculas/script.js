@@ -69,18 +69,27 @@ const peliculas = [
             "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
     },
     {
-        titulo: "Película 5",
-        consultaOmdb: "Película 5",
+        titulo: "Proyecto Fin Del Mundo",
         anio: "2026",
-        calificacion: null,
-        enlaceCalificacion: "",
-        posterAutomatico: "",
-        calidad: "HD CAM",
-        genero: "Comedia",
-        imagen: "img/pelicula_5_2026.webp",
-        muestra: "",
-        descripcion: "Descripción de la película."
-    }
+        calificacion: 8.2,
+        enlaceCalificacion: "https://www.imdb.com/es/title/tt12042730/",
+        calidad: "full hd",
+        genero: "Ciencia Ficción - Aventura - Drama",
+        imagen: "img/Proyecto Fin Del Mundo.webp",
+        descripcion:
+            "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
+    },
+    {
+titulo: "Super Mario Galaxy",
+anio: "2026",
+calificacion: 6.2,
+enlaceCalificacion: "https://www.imdb.com/title/tt28650488/",
+calidad: "full hd",
+genero: "Animación - Aventura - Comedia - Fantasía",
+imagen: "img/Super Mario Galaxy.webp",
+descripcion:
+"Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
+},
 ];
 
 /* =========================================
