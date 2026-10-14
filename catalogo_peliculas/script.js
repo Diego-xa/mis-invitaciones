@@ -20,7 +20,7 @@ const peliculas = [
         calificacion: 8.0,
         enlaceCalificacion: "https://www.imdb.com/title/tt22084616/",
         calidad: "full hd",
-        genero: "Marvel - Superhéroe - Acción - Aventura",
+        genero: "Estrenos - Superhéroes - Acción y aventura",
         imagen: "img/Spider Man Brand New Day.webp",
         muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
         descripcion: "El mundo ha olvidado quién es Peter Parker, pero él sigue protegiendo Nueva York. Cuando una nueva amenaza aparece y sus poderes comienzan a cambiar, deberá descubrir qué está ocurriendo antes de perder el control"
@@ -33,7 +33,7 @@ const peliculas = [
         enlaceCalificacion: "https://www.imdb.com/title/tt32393988/",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Terror - Suspenso - Sobrenatural",
+        genero: "Estrenos - Terror - Suspenso y misterio",
         imagen: "img/Noche del demonio - Están entre nosotros.webp",
         muestra: "",
         descripcion: "Gemma descubre que puede entrar en el más allá y traer de vuelta a sus habitantes. Pero cuando fuerzas oscuras descubren su poder, algo aterrador comienza a cruzar al mundo de los vivos"
@@ -46,7 +46,7 @@ const peliculas = [
         enlaceCalificacion: "https://www.imdb.com/find/?q=Doing%20Life",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Drama - Romance",
+        genero: "Estrenos - Drama y romance",
         imagen: "img/Las cartas de la vida (2026).webp",
         muestra: "",
         descripcion: "Una madre soltera comienza a intercambiar cartas con un preso que busca una segunda oportunidad. Lo que nace entre palabras y secretos cambiará sus vidas de una forma que ninguno imaginaba"
@@ -57,7 +57,7 @@ const peliculas = [
         calificacion: 7.4,
         enlaceCalificacion: "https://www.imdb.com/title/tt1756855/",
         calidad: "full hd",
-        genero: "Animación - Comedia - Aventura",
+        genero: "Estrenos - Animación y anime - Comedia - Infantil y familiar",
         imagen: "img/Coyote vs. Acme.webp",
         muestra: "",
         descripcion: "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
@@ -68,7 +68,7 @@ const peliculas = [
         calificacion: 8.2,
         enlaceCalificacion: "https://www.imdb.com/es/title/tt12042730/",
         calidad: "full hd",
-        genero: "Ciencia Ficción - Aventura - Drama",
+        genero: "Estrenos - Ciencia ficción y fantasía - Drama y romance",
         imagen: "img/Proyecto Fin Del Mundo.webp",
         muestra: "",
         descripcion: "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
@@ -79,12 +79,27 @@ const peliculas = [
         calificacion: 6.2,
         enlaceCalificacion: "https://www.imdb.com/title/tt28650488/",
         calidad: "full hd",
-        genero: "Animación - Aventura - Comedia - Fantasía",
+        genero: "Estrenos - Animación y anime - Acción y aventura - Infantil y familiar",
         imagen: "img/Super Mario Galaxy.webp",
         muestra: "",
         descripcion: "Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
-    }
+    },
+    {
+        titulo: "Spider-Man No Way Home",
+        anio: "2021",
+        calificacion: 8.2,
+        enlaceCalificacion: "https://www.imdb.com/title/tt10872600/",
+        calidad: "full hd",
+        genero: "Superhéroes - Acción y aventura - Ciencia ficción y fantasía",
+        imagen: "img/Spider-Man No Way Home.webp",
+        muestra: "",
+        descripcion: "La identidad de Peter Parker ha sido revelada y su vida cambia para siempre. Al pedir ayuda al Doctor Strange, un hechizo sale mal y abre las puertas a otros universos, trayendo enemigos inesperados. Ahora Spider-Man deberá enfrentarse a una amenaza que pondrá a prueba todo lo que significa ser un héroe"
+    },
+
+    // AGREGA AQUÍ LAS DEMÁS PELÍCULAS.
+    // Recuerda separar cada objeto con una coma.
 ];
+
 
 /* =========================================
    CONSULTA OPCIONAL DE OMDb
@@ -111,7 +126,9 @@ async function obtenerDatosAutomaticos(pelicula) {
                 anio: String(pelicula.anio)
             });
 
-            const respuesta = await fetch(`${API_CATALOGO}?${parametros}`);
+            const respuesta = await fetch(
+                `${API_CATALOGO}?${parametros}`
+            );
 
             if (!respuesta.ok) return null;
 
@@ -121,7 +138,10 @@ async function obtenerDatosAutomaticos(pelicula) {
 
             return datos;
         } catch (error) {
-            console.warn("No se pudieron cargar datos externos:", error);
+            console.warn(
+                "No se pudieron cargar datos externos:",
+                error
+            );
             return null;
         }
     })();
@@ -131,31 +151,33 @@ async function obtenerDatosAutomaticos(pelicula) {
 }
 
 async function cargarDatosAutomaticos() {
-    await Promise.all(peliculas.map(async pelicula => {
-        const datos = await obtenerDatosAutomaticos(pelicula);
+    await Promise.all(
+        peliculas.map(async pelicula => {
+            const datos = await obtenerDatosAutomaticos(pelicula);
 
-        if (!datos) return;
+            if (!datos) return;
 
-        const nota = Number(datos.puntuacion);
+            const nota = Number(datos.puntuacion);
 
-        if (
-            datos.puntuacion !== null &&
-            datos.puntuacion !== "" &&
-            Number.isFinite(nota) &&
-            nota >= 0 &&
-            nota <= 10
-        ) {
-            pelicula.calificacion = nota;
-        }
+            if (
+                datos.puntuacion !== null &&
+                datos.puntuacion !== "" &&
+                Number.isFinite(nota) &&
+                nota >= 0 &&
+                nota <= 10
+            ) {
+                pelicula.calificacion = nota;
+            }
 
-        if (datos.enlace) {
-            pelicula.enlaceCalificacion = datos.enlace;
-        }
+            if (datos.enlace) {
+                pelicula.enlaceCalificacion = datos.enlace;
+            }
 
-        if (datos.poster) {
-            pelicula.posterAutomatico = datos.poster;
-        }
-    }));
+            if (datos.poster) {
+                pelicula.posterAutomatico = datos.poster;
+            }
+        })
+    );
 
     actualizarCatalogo();
 }
@@ -164,7 +186,12 @@ async function cargarDatosAutomaticos() {
    CATEGORÍAS Y ELEMENTOS HTML
 ========================================= */
 
-const categoriasPrincipales = ["Drama", "Acción", "Comedia", "Animada"];
+const categoriasPrincipales = [
+    "Drama",
+    "Acción",
+    "Comedia",
+    "Animada"
+];
 
 const moviesGrid = document.getElementById("moviesGrid");
 const searchInput = document.getElementById("searchInput");
@@ -180,7 +207,8 @@ const sampleFrame = document.getElementById("sampleFrame");
 const sampleTitle = document.getElementById("sampleTitle");
 const closeSample = document.getElementById("closeSample");
 
-let categoriaActiva = "estrenos";
+// CAMBIO: el catálogo comienza mostrando todas las películas.
+let categoriaActiva = "todos";
 
 /* =========================================
    UTILIDADES
@@ -202,7 +230,9 @@ function obtenerGeneros(pelicula) {
 }
 
 function crearEnlaceWhatsApp(titulo, anio) {
-    const mensaje = `Hola 👋, quisiera la película "${titulo} (${anio})" 🎬`;
+    const mensaje =
+        `Hola 👋, quisiera la película "${titulo} (${anio})" 🎬`;
+
     return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
@@ -290,6 +320,7 @@ function obtenerCategorias() {
     peliculas.forEach(pelicula => {
         obtenerGeneros(pelicula).forEach(genero => {
             const clave = normalizarTexto(genero);
+
             if (clave && !encontradas.has(clave)) {
                 encontradas.set(clave, genero);
             }
@@ -323,10 +354,15 @@ function crearPestanas() {
 
     pestanas.forEach(pestana => {
         const boton = document.createElement("button");
+
         boton.type = "button";
         boton.className = "genre-tab";
         boton.textContent = pestana.nombre;
-        boton.setAttribute("aria-pressed", String(categoriaActiva === pestana.id));
+
+        boton.setAttribute(
+            "aria-pressed",
+            String(categoriaActiva === pestana.id)
+        );
 
         if (categoriaActiva === pestana.id) {
             boton.classList.add("active");
@@ -351,6 +387,7 @@ function perteneceACategoria(pelicula) {
 
     if (categoriaActiva.startsWith("genero:")) {
         const buscado = categoriaActiva.slice(7);
+
         return obtenerGeneros(pelicula).some(
             genero => normalizarTexto(genero) === buscado
         );
@@ -374,7 +411,8 @@ function coincideConBusqueda(pelicula, texto) {
         pelicula.descripcion
     ].join(" ");
 
-    return normalizarTexto(contenido).includes(normalizarTexto(texto));
+    return normalizarTexto(contenido)
+        .includes(normalizarTexto(texto));
 }
 
 function actualizarTitulo() {
@@ -393,7 +431,8 @@ function actualizarTitulo() {
     }
 
     const genero = obtenerCategorias().find(
-        categoria => `genero:${normalizarTexto(categoria)}` === categoriaActiva
+        categoria =>
+            `genero:${normalizarTexto(categoria)}` === categoriaActiva
     );
 
     sectionHeading.textContent = `🎬 ${genero ?? "Películas"}`;
@@ -420,11 +459,16 @@ function crearCalificacion(pelicula) {
         return contenedor;
     }
 
-    const estrellasLlenas = Math.max(0, Math.min(5, Math.round(notaValor / 2)));
+    const estrellasLlenas = Math.max(
+        0,
+        Math.min(5, Math.round(notaValor / 2))
+    );
 
     const estrellas = document.createElement("span");
     estrellas.className = "rating-stars";
-    estrellas.textContent = "★".repeat(estrellasLlenas) + "☆".repeat(5 - estrellasLlenas);
+    estrellas.textContent =
+        "★".repeat(estrellasLlenas) +
+        "☆".repeat(5 - estrellasLlenas);
 
     const nota = document.createElement("span");
     nota.className = "rating-score";
@@ -434,11 +478,13 @@ function crearCalificacion(pelicula) {
 
     if (pelicula.enlaceCalificacion) {
         const fuente = document.createElement("a");
+
         fuente.className = "rating-source";
         fuente.href = pelicula.enlaceCalificacion;
         fuente.target = "_blank";
         fuente.rel = "noopener noreferrer";
         fuente.textContent = "IMDb";
+
         contenedor.appendChild(fuente);
     }
 
@@ -473,7 +519,8 @@ function mostrarPeliculas(lista) {
         imagen.src = pelicula.posterAutomatico || pelicula.imagen;
 
         imagen.addEventListener("error", () => {
-            const posterLocal = new URL(pelicula.imagen, document.baseURI).href;
+            const posterLocal =
+                new URL(pelicula.imagen, document.baseURI).href;
 
             if (imagen.src !== posterLocal) {
                 imagen.src = pelicula.imagen;
@@ -518,23 +565,40 @@ function mostrarPeliculas(lista) {
 
         if (pelicula.muestra && pelicula.muestra.trim()) {
             const botonMuestra = document.createElement("button");
+
             botonMuestra.type = "button";
             botonMuestra.className = "movie-button sample-button";
             botonMuestra.textContent = "▶ Ver muestra";
-            botonMuestra.addEventListener("click", () => abrirMuestra(pelicula));
+
+            botonMuestra.addEventListener(
+                "click",
+                () => abrirMuestra(pelicula)
+            );
+
             acciones.appendChild(botonMuestra);
         }
 
         const botonWhatsApp = document.createElement("a");
+
         botonWhatsApp.className = "movie-button";
-        botonWhatsApp.href = crearEnlaceWhatsApp(pelicula.titulo, pelicula.anio);
+        botonWhatsApp.href = crearEnlaceWhatsApp(
+            pelicula.titulo,
+            pelicula.anio
+        );
         botonWhatsApp.target = "_blank";
         botonWhatsApp.rel = "noopener noreferrer";
         botonWhatsApp.textContent = "🎬 Quiero esta";
 
         acciones.appendChild(botonWhatsApp);
 
-        info.append(titulo, calificacion, genero, descripcion, acciones);
+        info.append(
+            titulo,
+            calificacion,
+            genero,
+            descripcion,
+            acciones
+        );
+
         tarjeta.append(posterWrapper, info);
         moviesGrid.appendChild(tarjeta);
     });
