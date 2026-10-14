@@ -16,46 +16,43 @@ const API_CATALOGO =
 
 const peliculas = [
     {
-        titulo: "Spider-Man: Un nuevo día",
-        consultaOmdb: "Spider-Man: Brand New Day",
+        titulo: "Spider Man Brand New Day",
         anio: "2026",
-        calificacion: null,
-        enlaceCalificacion: "",
-        posterAutomatico: "",
+        calificacion: 8.0,
+        enlaceCalificacion: "https://www.imdb.com/title/tt22084616/",
         calidad: "full hd",
-        genero: "Marvel - Superhéroe - Acción",
-        imagen: "img/spider_man_un_nuevo_dia_2026.webp",
-        muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
+        genero: "Marvel - Superhéroe - Acción - Aventura",
+        imagen: "img/Spider Man Brand New Day.webp",
         descripcion:
-            "Tras el Día del Juicio Final, Peter Parker intenta centrarse en la universidad y abandonar a Spider-Man. Cuando una nueva amenaza pone en peligro a sus amigos, debe romper su promesa y volver al traje."
+            "El mundo ha olvidado quién es Peter Parker, pero él sigue protegiendo Nueva York. Cuando una nueva amenaza aparece y sus poderes comienzan a cambiar, deberá descubrir qué está ocurriendo antes de perder el control"
     },
     {
-        titulo: "Noche del demonio: están entre nosotros",
+        titulo: "Noche del demonio - Están entre nosotros",
         consultaOmdb: "Insidious: Out of the Further",
         anio: "2026",
-        calificacion: null,
-        enlaceCalificacion: "",
+        calificacion: 6.2,
+        enlaceCalificacion: "https://www.imdb.com/title/tt32393988/",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Terror · Suspenso",
-        imagen: "img/noche_del_demonio_2026.webp",
+        genero: "Terror · Suspenso · Sobrenatural",
+        imagen: "img/Noche del demonio - Están entre nosotros.webp",
         muestra: "",
         descripcion:
-            "La franquicia de terror regresa con una nueva historia de apariciones sobrenaturales y fuerzas que amenazan con cruzar a nuestra realidad."
+            "Gemma descubre que puede entrar en el más allá y traer de vuelta a sus habitantes. Pero cuando fuerzas oscuras descubren su poder, algo aterrador comienza a cruzar al mundo de los vivos"
     },
     {
         titulo: "Las cartas de la vida (2026)",
-        consultaOmdb: "Las cartas de la vida",
+        consultaOmdb: "Doing Life",
         anio: "2026",
-        calificacion: null,
-        enlaceCalificacion: "",
+        calificacion: 6.4,
+        enlaceCalificacion: "https://www.imdb.com/find/?q=Doing%20Life",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Drama",
+        genero: "Drama - Romance",
         imagen: "img/Las cartas de la vida (2026).webp",
         muestra: "",
         descripcion:
-            "Una madre soltera en dificultades se cruza con un ex prisionero que busca redención, y juntos descubren fortaleza en su inesperada conexión."
+            "Una madre soltera comienza a intercambiar cartas con un preso que busca una segunda oportunidad. Lo que nace entre palabras y secretos cambiará sus vidas de una forma que ninguno imaginaba"
     },
     {
         titulo: "Coyote vs. Acme",
@@ -80,16 +77,16 @@ const peliculas = [
             "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
     },
     {
-titulo: "Super Mario Galaxy",
-anio: "2026",
-calificacion: 6.2,
-enlaceCalificacion: "https://www.imdb.com/title/tt28650488/",
-calidad: "full hd",
-genero: "Animación - Aventura - Comedia - Fantasía",
-imagen: "img/Super Mario Galaxy.webp",
-descripcion:
-"Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
-},
+        titulo: "Super Mario Galaxy",
+        anio: "2026",
+        calificacion: 6.2,
+        enlaceCalificacion: "https://www.imdb.com/title/tt28650488/",
+        calidad: "full hd",
+        genero: "Animación - Aventura - Comedia - Fantasía",
+        imagen: "img/Super Mario Galaxy.webp",
+        descripcion:
+            "Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
+    },
 ];
 
 /* =========================================
