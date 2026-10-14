@@ -20,7 +20,7 @@ const peliculas = [
         calificacion: 8.0,
         enlaceCalificacion: "https://www.imdb.com/title/tt22084616/",
         calidad: "full hd",
-        genero: "Estrenos - Superhéroes - Acción y aventura",
+        genero: "Marvel - Superhéroes",
         imagen: "img/Spider Man Brand New Day.webp",
         muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
         descripcion: "El mundo ha olvidado quién es Peter Parker, pero él sigue protegiendo Nueva York. Cuando una nueva amenaza aparece y sus poderes comienzan a cambiar, deberá descubrir qué está ocurriendo antes de perder el control"
@@ -33,7 +33,7 @@ const peliculas = [
         enlaceCalificacion: "https://www.imdb.com/title/tt32393988/",
         posterAutomatico: "",
         calidad: "full hd",
-        genero: "Estrenos - Terror - Suspenso y misterio",
+        genero: "Estrenos - Terror",
         imagen: "img/Noche del demonio - Están entre nosotros.webp",
         muestra: "",
         descripcion: "Gemma descubre que puede entrar en el más allá y traer de vuelta a sus habitantes. Pero cuando fuerzas oscuras descubren su poder, algo aterrador comienza a cruzar al mundo de los vivos"
@@ -57,7 +57,7 @@ const peliculas = [
         calificacion: 7.4,
         enlaceCalificacion: "https://www.imdb.com/title/tt1756855/",
         calidad: "full hd",
-        genero: "Estrenos - Animación y anime - Comedia - Infantil y familiar",
+        genero: "Infantil y animación - Comedia",
         imagen: "img/Coyote vs. Acme.webp",
         muestra: "",
         descripcion: "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
@@ -68,7 +68,7 @@ const peliculas = [
         calificacion: 8.2,
         enlaceCalificacion: "https://www.imdb.com/es/title/tt12042730/",
         calidad: "full hd",
-        genero: "Estrenos - Ciencia ficción y fantasía - Drama y romance",
+        genero: "Estrenos - Ciencia ficción y fantasía",
         imagen: "img/Proyecto Fin Del Mundo.webp",
         muestra: "",
         descripcion: "Un astronauta despierta solo en el espacio y descubre que el Sol está muriendo. Con la humanidad al borde de la extinción, una misión imposible y un encuentro inesperado podrían ser su última esperanza"
@@ -79,7 +79,7 @@ const peliculas = [
         calificacion: 6.2,
         enlaceCalificacion: "https://www.imdb.com/title/tt28650488/",
         calidad: "full hd",
-        genero: "Estrenos - Animación y anime - Acción y aventura - Infantil y familiar",
+        genero: "Infantil y animación - Acción y aventura",
         imagen: "img/Super Mario Galaxy.webp",
         muestra: "",
         descripcion: "Una aventura inesperada lleva a Mario y Luigi más allá de las estrellas, donde nuevos aliados y peligros los esperan. Para salvar la galaxia, deberán enfrentarse a una amenaza que podría cambiarlo todo"
@@ -90,16 +90,23 @@ const peliculas = [
         calificacion: 8.2,
         enlaceCalificacion: "https://www.imdb.com/title/tt10872600/",
         calidad: "full hd",
-        genero: "Superhéroes - Acción y aventura - Ciencia ficción y fantasía",
+        genero: "Superhéroes - Ciencia ficción y fantasía",
         imagen: "img/Spider-Man No Way Home.webp",
         muestra: "",
         descripcion: "La identidad de Peter Parker ha sido revelada y su vida cambia para siempre. Al pedir ayuda al Doctor Strange, un hechizo sale mal y abre las puertas a otros universos, trayendo enemigos inesperados. Ahora Spider-Man deberá enfrentarse a una amenaza que pondrá a prueba todo lo que significa ser un héroe"
     },
-
-    // AGREGA AQUÍ LAS DEMÁS PELÍCULAS.
-    // Recuerda separar cada objeto con una coma.
+    {
+        titulo: "Ferrari",
+        anio: "2023",
+        calificacion: 6.4,
+        enlaceCalificacion: "https://www.imdb.com/title/tt3758542/",
+        calidad: "full hd",
+        genero: "Biografía y hechos reales - Drama y romance",
+        imagen: "img/Ferrari.webp",
+        muestra: "",
+        descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
+    }
 ];
-
 
 /* =========================================
    CONSULTA OPCIONAL DE OMDb
@@ -183,15 +190,8 @@ async function cargarDatosAutomaticos() {
 }
 
 /* =========================================
-   CATEGORÍAS Y ELEMENTOS HTML
+   ELEMENTOS HTML
 ========================================= */
-
-const categoriasPrincipales = [
-    "Drama",
-    "Acción",
-    "Comedia",
-    "Animada"
-];
 
 const moviesGrid = document.getElementById("moviesGrid");
 const searchInput = document.getElementById("searchInput");
@@ -207,7 +207,11 @@ const sampleFrame = document.getElementById("sampleFrame");
 const sampleTitle = document.getElementById("sampleTitle");
 const closeSample = document.getElementById("closeSample");
 
-// CAMBIO: el catálogo comienza mostrando todas las películas.
+/* =========================================
+   PESTAÑA INICIAL
+========================================= */
+
+// Al abrir la página, mostrar todas las películas.
 let categoriaActiva = "todos";
 
 /* =========================================
@@ -311,32 +315,8 @@ document.addEventListener("keydown", evento => {
 });
 
 /* =========================================
-   PESTAÑAS
+   PESTAÑAS: SOLO TODOS Y ESTRENOS
 ========================================= */
-
-function obtenerCategorias() {
-    const encontradas = new Map();
-
-    peliculas.forEach(pelicula => {
-        obtenerGeneros(pelicula).forEach(genero => {
-            const clave = normalizarTexto(genero);
-
-            if (clave && !encontradas.has(clave)) {
-                encontradas.set(clave, genero);
-            }
-        });
-    });
-
-    const categorias = [...categoriasPrincipales];
-
-    encontradas.forEach((nombre, clave) => {
-        if (!categorias.some(c => normalizarTexto(c) === clave)) {
-            categorias.push(nombre);
-        }
-    });
-
-    return categorias;
-}
 
 function crearPestanas() {
     if (!genreTabs) return;
@@ -344,12 +324,8 @@ function crearPestanas() {
     genreTabs.innerHTML = "";
 
     const pestanas = [
-        { id: "estrenos", nombre: `Estrenos ${anioEstrenos}` },
         { id: "todos", nombre: "Todos" },
-        ...obtenerCategorias().map(categoria => ({
-            id: `genero:${normalizarTexto(categoria)}`,
-            nombre: categoria
-        }))
+        { id: "estrenos", nombre: `Estrenos ${anioEstrenos}` }
     ];
 
     pestanas.forEach(pestana => {
@@ -379,41 +355,64 @@ function crearPestanas() {
 }
 
 function perteneceACategoria(pelicula) {
-    if (categoriaActiva === "todos") return true;
-
-    if (categoriaActiva === "estrenos") {
-        return String(pelicula.anio).trim() === anioEstrenos;
+    if (categoriaActiva === "todos") {
+        return true;
     }
 
-    if (categoriaActiva.startsWith("genero:")) {
-        const buscado = categoriaActiva.slice(7);
-
-        return obtenerGeneros(pelicula).some(
-            genero => normalizarTexto(genero) === buscado
-        );
+    if (categoriaActiva === "estrenos") {
+        return String(pelicula.anio).trim() === String(anioEstrenos);
     }
 
     return true;
 }
 
 /* =========================================
-   BUSCADOR Y TÍTULOS
+   BUSCADOR
 ========================================= */
 
 function coincideConBusqueda(pelicula, texto) {
-    if (!texto) return true;
+    const busqueda = normalizarTexto(texto);
 
-    const contenido = [
+    if (!busqueda) return true;
+
+    const generos = obtenerGeneros(pelicula).map(normalizarTexto);
+
+    // Si la búsqueda coincide con un género existente,
+    // mostrar solo las películas clasificadas en ese género.
+    if (!busqueda.includes(" ")) {
+        const coincideGenero = generos.some(
+            genero => genero.includes(busqueda)
+        );
+
+        if (coincideGenero) {
+            return true;
+        }
+
+        const existeEseGenero = peliculas.some(p =>
+            obtenerGeneros(p).some(
+                genero => normalizarTexto(genero).includes(busqueda)
+            )
+        );
+
+        if (existeEseGenero) {
+            return false;
+        }
+    }
+
+    const contenido = normalizarTexto([
         pelicula.titulo,
         pelicula.anio,
         pelicula.calidad,
         pelicula.genero,
         pelicula.descripcion
-    ].join(" ");
+    ].join(" "));
 
-    return normalizarTexto(contenido)
-        .includes(normalizarTexto(texto));
+    return contenido.includes(busqueda);
 }
+
+/* =========================================
+   TÍTULOS DE SECCIÓN
+========================================= */
 
 function actualizarTitulo() {
     if (!sectionHeading || !sectionLabel) return;
@@ -421,26 +420,14 @@ function actualizarTitulo() {
     if (categoriaActiva === "estrenos") {
         sectionHeading.textContent = `🔥 Estrenos ${anioEstrenos}`;
         sectionLabel.textContent = "PELÍCULAS DEL AÑO";
-        return;
-    }
-
-    if (categoriaActiva === "todos") {
+    } else {
         sectionHeading.textContent = "🎬 Todas las películas";
         sectionLabel.textContent = "CATÁLOGO COMPLETO";
-        return;
     }
-
-    const genero = obtenerCategorias().find(
-        categoria =>
-            `genero:${normalizarTexto(categoria)}` === categoriaActiva
-    );
-
-    sectionHeading.textContent = `🎬 ${genero ?? "Películas"}`;
-    sectionLabel.textContent = "EXPLORA POR GÉNERO";
 }
 
 /* =========================================
-   ESTRELLAS
+   CALIFICACIONES
 ========================================= */
 
 function crearCalificacion(pelicula) {
@@ -611,11 +598,11 @@ function mostrarPeliculas(lista) {
 function actualizarCatalogo() {
     actualizarTitulo();
 
-    if (!searchInput) return;
+    const texto = searchInput ? searchInput.value : "";
 
     const resultados = peliculas.filter(pelicula =>
         perteneceACategoria(pelicula) &&
-        coincideConBusqueda(pelicula, searchInput.value)
+        coincideConBusqueda(pelicula, texto)
     );
 
     mostrarPeliculas(resultados);
