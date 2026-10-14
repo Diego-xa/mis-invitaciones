@@ -1,303 +1,608 @@
+
 /* =========================================
-   CONFIGURACION
+   CONFIGURACIÓN
 ========================================= */
 
-/*
-    ESCRIBE TU NUMERO AQUI
-
-    Ejemplo Peru:
-    51987654321
-
-    SIN:
-    +
-    espacios
-    guiones
-*/
-
 const NUMERO_WHATSAPP = "51996347326";
+const anioEstrenos = "2026";
 
+// REEMPLAZA ESTA DIRECCIÓN POR LA DE TU WORKER
+const API_CATALOGO =
+    "https://catalogo-api.TUUSUARIO.workers.dev/api/pelicula";
 
 /* =========================================
-   PELICULAS
+   PELÍCULAS
 ========================================= */
 
 const peliculas = [
-
     {
         titulo: "Spider-Man: Un nuevo día",
+        consultaOmdb: "Spider-Man: Brand New Day",
         anio: "2026",
+        calificacion: null,
+        enlaceCalificacion: "",
+        posterAutomatico: "",
         calidad: "full hd",
-        genero: "Marvel - Superhéroe - Acción ",
+        genero: "Marvel - Superhéroe - Acción",
         imagen: "img/spider_man_un_nuevo_dia_2026.webp",
+        muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
         descripcion:
             "Tras el Día del Juicio Final, Peter Parker intenta centrarse en la universidad y abandonar a Spider-Man. Cuando una nueva amenaza pone en peligro a sus amigos, debe romper su promesa y volver al traje."
     },
-
-
     {
         titulo: "Noche del demonio: están entre nosotros",
+        consultaOmdb: "Insidious: Out of the Further",
         anio: "2026",
-        calidad:  "full hd",
+        calificacion: null,
+        enlaceCalificacion: "",
+        posterAutomatico: "",
+        calidad: "full hd",
         genero: "Terror · Suspenso",
         imagen: "img/noche_del_demonio_2026.webp",
+        muestra: "",
         descripcion:
-            "La franquicia de terror regresa a sus raíces sobrenaturales. Un nuevo protagonista enfrenta apariciones misteriosas que van mucho más allá de los fenómenos clásicos de fantasmas. El mal encuentra nuevas formas de entrar a la realidad."
+            "La franquicia de terror regresa con una nueva historia de apariciones sobrenaturales y fuerzas que amenazan con cruzar a nuestra realidad."
     },
-
-
     {
         titulo: "Las cartas de la vida (2026)",
+        consultaOmdb: "Las cartas de la vida",
         anio: "2026",
-        calidad:  "full hd",
+        calificacion: null,
+        enlaceCalificacion: "",
+        posterAutomatico: "",
+        calidad: "full hd",
         genero: "Drama",
         imagen: "img/Las cartas de la vida (2026).webp",
+        muestra: "",
         descripcion:
-            "Una madre soltera en dificultades se cruza con un ex prisionero que busca redención, y juntos descubren fortaleza en su inesperada conexión.."
+            "Una madre soltera en dificultades se cruza con un ex prisionero que busca redención, y juntos descubren fortaleza en su inesperada conexión."
     },
-
-
     {
-        titulo: "Película 4",
+        titulo: "Coyote vs. Acme",
         anio: "2026",
+        calificacion: 7.4,
+        enlaceCalificacion: "https://www.imdb.com/title/tt1756855/",
         calidad: "full hd",
-        genero: "Terror · Suspenso",
-        imagen: "img/pelicula_4_2026.webp",
-        descripcion: "Descripción de la película."
+        genero: "Animación - Comedia - Aventura",
+        imagen: "img/Coyote vs. Acme.webp",
+        descripcion:
+            "Tras años de trampas fallidas y productos defectuosos, el Coyote decide llevar a ACME a los tribunales. Con un abogado a su lado, descubrirá que detrás de sus desastres se esconde algo mucho más grande"
     },
-
     {
         titulo: "Película 5",
+        consultaOmdb: "Película 5",
         anio: "2026",
-        calidad: "full hd",
+        calificacion: null,
+        enlaceCalificacion: "",
+        posterAutomatico: "",
+        calidad: "HD CAM",
         genero: "Comedia",
         imagen: "img/pelicula_5_2026.webp",
+        muestra: "",
         descripcion: "Descripción de la película."
     }
-
 ];
 
-
 /* =========================================
-   ELEMENTOS
+   CONSULTA AUTOMÁTICA DE OMDb
 ========================================= */
 
-const moviesGrid =
-    document.getElementById("moviesGrid");
+// Evita repetir solicitudes para una misma película.
+const consultasRealizadas = new Map();
 
-const searchInput =
-    document.getElementById("searchInput");
+async function obtenerDatosAutomaticos(pelicula) {
+    const titulo = pelicula.consultaOmdb || pelicula.titulo;
+    const clave = `${titulo}-${pelicula.anio}`;
 
-const movieCount =
-    document.getElementById("movieCount");
+    if (consultasRealizadas.has(clave)) {
+        return consultasRealizadas.get(clave);
+    }
 
-const noResults =
-    document.getElementById("noResults");
+    const promesa = (async () => {
+        try {
+            const parametros = new URLSearchParams({
+                titulo,
+                anio: String(pelicula.anio)
+            });
 
-const generalWhatsapp =
-    document.getElementById("generalWhatsapp");
+            const respuesta = await fetch(
+                `${API_CATALOGO}?${parametros}`
+            );
 
+            if (!respuesta.ok) {
+                throw new Error(`HTTP ${respuesta.status}`);
+            }
+
+            const datos = await respuesta.json();
+
+            if (datos.error) {
+                throw new Error(datos.error);
+            }
+
+            return datos;
+        } catch (error) {
+            console.warn(
+                `No se pudieron obtener datos de ${pelicula.titulo}:`,
+                error.message
+            );
+
+            return null;
+        }
+    })();
+
+    consultasRealizadas.set(clave, promesa);
+    return promesa;
+}
+
+async function cargarDatosAutomaticos() {
+    await Promise.all(
+        peliculas.map(async pelicula => {
+            pelicula.consultando = true;
+
+            const datos = await obtenerDatosAutomaticos(pelicula);
+
+            if (datos) {
+                const nota = Number(datos.puntuacion);
+
+                pelicula.calificacion =
+                    datos.puntuacion !== null &&
+                        datos.puntuacion !== "" &&
+                        Number.isFinite(nota) &&
+                        nota >= 0 &&
+                        nota <= 10
+                        ? nota
+                        : null;
+
+                pelicula.enlaceCalificacion = datos.enlace || "";
+
+                if (datos.poster) {
+                    pelicula.posterAutomatico = datos.poster;
+                }
+            }
+
+            pelicula.consultando = false;
+        })
+    );
+
+    actualizarCatalogo();
+}
 
 /* =========================================
-   WHATSAPP
+   CATEGORÍAS
 ========================================= */
 
-function crearEnlaceWhatsApp(
-    titulo,
-    anio
-) {
+const categoriasPrincipales = [
+    "Drama",
+    "Acción",
+    "Comedia",
+    "Animada"
+];
 
+/* =========================================
+   ELEMENTOS HTML
+========================================= */
+
+const moviesGrid = document.getElementById("moviesGrid");
+const searchInput = document.getElementById("searchInput");
+const movieCount = document.getElementById("movieCount");
+const noResults = document.getElementById("noResults");
+const generalWhatsapp = document.getElementById("generalWhatsapp");
+const genreTabs = document.getElementById("genreTabs");
+const sectionHeading = document.getElementById("sectionHeading");
+const sectionLabel = document.getElementById("sectionLabel");
+
+const sampleModal = document.getElementById("sampleModal");
+const sampleFrame = document.getElementById("sampleFrame");
+const sampleTitle = document.getElementById("sampleTitle");
+const closeSample = document.getElementById("closeSample");
+
+let categoriaActiva = "estrenos";
+
+/* =========================================
+   UTILIDADES
+========================================= */
+
+function normalizarTexto(texto) {
+    return String(texto ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+function obtenerGeneros(pelicula) {
+    return String(pelicula.genero ?? "")
+        .split(/[·•,;|]| - | – | — /)
+        .map(genero => genero.trim())
+        .filter(Boolean);
+}
+
+function crearEnlaceWhatsApp(titulo, anio) {
     const mensaje =
         `Hola 👋, quisiera la película "${titulo} (${anio})" 🎬`;
 
-    return (
-        `https://wa.me/` +
-        `${NUMERO_WHATSAPP}` +
-        `?text=` +
-        encodeURIComponent(mensaje)
-    );
-
+    return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
+function obtenerEnlaceReproduccion(enlace) {
+    const url = String(enlace ?? "").trim();
+    const coincidencia = url.match(/\/file\/d\/([^/?]+)/);
+
+    if (coincidencia) {
+        return `https://drive.google.com/file/d/${coincidencia[1]}/preview`;
+    }
+
+    const idCoincide = url.match(/[?&]id=([^&]+)/);
+
+    if (idCoincide && url.includes("drive.google.com")) {
+        return `https://drive.google.com/file/d/${idCoincide[1]}/preview`;
+    }
+
+    return "";
+}
 
 /* =========================================
-   MOSTRAR PELICULAS
+   REPRODUCTOR DE MUESTRAS
+========================================= */
+
+function abrirMuestra(pelicula) {
+    if (!sampleModal || !sampleFrame || !sampleTitle) return;
+
+    const enlace = obtenerEnlaceReproduccion(pelicula.muestra);
+
+    if (!enlace) {
+        alert("El enlace de la muestra no es válido.");
+        return;
+    }
+
+    sampleTitle.textContent = `Ver muestra: ${pelicula.titulo}`;
+    sampleFrame.src = enlace;
+    sampleModal.classList.remove("hidden");
+    sampleModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("sample-modal-open");
+
+    if (closeSample) closeSample.focus();
+}
+
+function cerrarMuestra() {
+    if (!sampleModal || !sampleFrame) return;
+
+    sampleFrame.src = "about:blank";
+    sampleModal.classList.add("hidden");
+    sampleModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("sample-modal-open");
+}
+
+if (closeSample) {
+    closeSample.addEventListener("click", cerrarMuestra);
+}
+
+if (sampleModal) {
+    const fondo = sampleModal.querySelector(".sample-modal-backdrop");
+
+    if (fondo) fondo.addEventListener("click", cerrarMuestra);
+}
+
+document.addEventListener("keydown", evento => {
+    if (
+        evento.key === "Escape" &&
+        sampleModal &&
+        !sampleModal.classList.contains("hidden")
+    ) {
+        cerrarMuestra();
+    }
+});
+
+/* =========================================
+   PESTAÑAS DE GÉNERO
+========================================= */
+
+function obtenerCategorias() {
+    const encontradas = new Map();
+
+    peliculas.forEach(pelicula => {
+        obtenerGeneros(pelicula).forEach(genero => {
+            const clave = normalizarTexto(genero);
+
+            if (clave && !encontradas.has(clave)) {
+                encontradas.set(clave, genero);
+            }
+        });
+    });
+
+    const categorias = [...categoriasPrincipales];
+
+    encontradas.forEach((nombre, clave) => {
+        if (!categorias.some(c => normalizarTexto(c) === clave)) {
+            categorias.push(nombre);
+        }
+    });
+
+    return categorias;
+}
+
+function crearPestanas() {
+    if (!genreTabs) return;
+
+    genreTabs.innerHTML = "";
+
+    const pestanas = [
+        { id: "estrenos", nombre: `Estrenos ${anioEstrenos}` },
+        { id: "todos", nombre: "Todos" },
+        ...obtenerCategorias().map(categoria => ({
+            id: `genero:${normalizarTexto(categoria)}`,
+            nombre: categoria
+        }))
+    ];
+
+    pestanas.forEach(pestana => {
+        const boton = document.createElement("button");
+
+        boton.type = "button";
+        boton.className = "genre-tab";
+        boton.textContent = pestana.nombre;
+        boton.setAttribute(
+            "aria-pressed",
+            String(categoriaActiva === pestana.id)
+        );
+
+        if (categoriaActiva === pestana.id) {
+            boton.classList.add("active");
+        }
+
+        boton.addEventListener("click", () => {
+            categoriaActiva = pestana.id;
+            crearPestanas();
+            actualizarCatalogo();
+        });
+
+        genreTabs.appendChild(boton);
+    });
+}
+
+function perteneceACategoria(pelicula) {
+    if (categoriaActiva === "todos") return true;
+
+    if (categoriaActiva === "estrenos") {
+        return String(pelicula.anio).trim() === anioEstrenos;
+    }
+
+    if (categoriaActiva.startsWith("genero:")) {
+        const buscado = categoriaActiva.slice(7);
+
+        return obtenerGeneros(pelicula).some(
+            genero => normalizarTexto(genero) === buscado
+        );
+    }
+
+    return true;
+}
+
+/* =========================================
+   BUSCADOR Y TÍTULOS
+========================================= */
+
+function coincideConBusqueda(pelicula, texto) {
+    if (!texto) return true;
+
+    const contenido = [
+        pelicula.titulo,
+        pelicula.anio,
+        pelicula.calidad,
+        pelicula.genero,
+        pelicula.descripcion
+    ].join(" ");
+
+    return normalizarTexto(contenido).includes(normalizarTexto(texto));
+}
+
+function actualizarTitulo() {
+    if (!sectionHeading || !sectionLabel) return;
+
+    if (categoriaActiva === "estrenos") {
+        sectionHeading.textContent = `🔥 Estrenos ${anioEstrenos}`;
+        sectionLabel.textContent = "PELÍCULAS DEL AÑO";
+        return;
+    }
+
+    if (categoriaActiva === "todos") {
+        sectionHeading.textContent = "🎬 Todas las películas";
+        sectionLabel.textContent = "CATÁLOGO COMPLETO";
+        return;
+    }
+
+    const genero = obtenerCategorias().find(
+        categoria => `genero:${normalizarTexto(categoria)}` === categoriaActiva
+    );
+
+    sectionHeading.textContent = `🎬 ${genero ?? "Películas"}`;
+    sectionLabel.textContent = "EXPLORA POR GÉNERO";
+}
+
+/* =========================================
+   CALIFICACIÓN AUTOMÁTICA
+========================================= */
+
+function crearCalificacion(pelicula) {
+    const contenedor = document.createElement("div");
+    contenedor.className = "movie-rating";
+
+    if (pelicula.consultando) {
+        contenedor.classList.add("rating-unavailable");
+        contenedor.textContent = "Buscando calificación…";
+        return contenedor;
+    }
+
+    if (
+        typeof pelicula.calificacion !== "number" ||
+        !Number.isFinite(pelicula.calificacion)
+    ) {
+        contenedor.classList.add("rating-unavailable");
+        contenedor.textContent = "Sin calificación";
+        return contenedor;
+    }
+
+    const estrellasLlenas = Math.round(pelicula.calificacion / 2);
+
+    const estrellas = document.createElement("span");
+    estrellas.className = "rating-stars";
+    estrellas.textContent =
+        "★".repeat(estrellasLlenas) +
+        "☆".repeat(5 - estrellasLlenas);
+
+    const nota = document.createElement("span");
+    nota.className = "rating-score";
+    nota.textContent = `${pelicula.calificacion.toFixed(1)}/10`;
+
+    contenedor.append(estrellas, nota);
+
+    if (pelicula.enlaceCalificacion) {
+        const fuente = document.createElement("a");
+        fuente.className = "rating-source";
+        fuente.href = pelicula.enlaceCalificacion;
+        fuente.target = "_blank";
+        fuente.rel = "noopener noreferrer";
+        fuente.textContent = "IMDb";
+
+        contenedor.appendChild(fuente);
+    }
+
+    return contenedor;
+}
+
+/* =========================================
+   MOSTRAR PELÍCULAS
 ========================================= */
 
 function mostrarPeliculas(lista) {
+    if (!moviesGrid || !movieCount || !noResults) return;
 
     moviesGrid.innerHTML = "";
 
-
     movieCount.textContent =
-        `${lista.length} ${lista.length === 1
-            ? "película"
-            : "películas"
-        }`;
+        `${lista.length} ${lista.length === 1 ? "película" : "películas"}`;
 
+    noResults.classList.toggle("hidden", lista.length !== 0);
 
-    if (lista.length === 0) {
+    lista.forEach(pelicula => {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "movie-card";
 
-        noResults.classList.remove(
-            "hidden"
-        );
+        const posterWrapper = document.createElement("div");
+        posterWrapper.className = "movie-poster-wrapper";
 
-        return;
+        const imagen = document.createElement("img");
+        imagen.className = "movie-poster";
+        imagen.alt = `Póster de ${pelicula.titulo}`;
+        imagen.loading = "lazy";
 
-    }
+        // Primero intenta usar el póster de la API.
+        // Si no está disponible, usa tu imagen local.
+        imagen.src = pelicula.posterAutomatico || pelicula.imagen;
 
+        imagen.addEventListener("error", () => {
+            if (
+                pelicula.posterAutomatico &&
+                imagen.src !== new URL(pelicula.imagen, document.baseURI).href
+            ) {
+                imagen.src = pelicula.imagen;
+                return;
+            }
 
-    noResults.classList.add(
-        "hidden"
-    );
+            imagen.alt = `Imagen no disponible: ${pelicula.titulo}`;
+        });
 
+        const meta = document.createElement("div");
+        meta.className = "movie-meta";
 
-    lista.forEach(
-        pelicula => {
+        const anio = document.createElement("span");
+        anio.className = "movie-year";
+        anio.textContent = pelicula.anio;
 
-            const tarjeta =
-                document.createElement(
-                    "article"
-                );
+        const calidad = document.createElement("span");
+        calidad.className = "movie-quality";
+        calidad.textContent = pelicula.calidad;
 
+        meta.append(anio, calidad);
+        posterWrapper.append(imagen, meta);
 
-            tarjeta.className =
-                "movie-card";
+        const info = document.createElement("div");
+        info.className = "movie-info";
 
+        const titulo = document.createElement("h3");
+        titulo.className = "movie-title";
+        titulo.textContent = pelicula.titulo;
 
-            tarjeta.innerHTML = `
+        const calificacion = crearCalificacion(pelicula);
 
-                <div class="movie-poster-wrapper">
+        const genero = document.createElement("p");
+        genero.className = "movie-genre";
+        genero.textContent = pelicula.genero;
 
-                    <img
-                        class="movie-poster"
-                        src="${pelicula.imagen}"
-                        alt="Poster de ${pelicula.titulo}"
-                        loading="lazy"
-                    >
+        const descripcion = document.createElement("p");
+        descripcion.className = "movie-description";
+        descripcion.textContent = pelicula.descripcion;
 
-                    <div class="movie-meta">
-                    <span class="movie-year">
-                    ${pelicula.anio}
-                    </span>
+        const acciones = document.createElement("div");
+        acciones.className = "movie-actions";
 
-                    <span class="movie-quality">
-                    ${pelicula.calidad}
-                    </span>
-                    </div>
-                    
-                    
-
-                </div>
-
-
-                <div class="movie-info">
-
-                    <h3 class="movie-title">
-                        ${pelicula.titulo}
-                    </h3>
-
-
-                    <p class="movie-genre">
-                        ${pelicula.genero}
-                    </p>
-
-
-                    <p class="movie-description">
-                        ${pelicula.descripcion}
-                    </p>
-
-
-                    <a
-                        class="movie-button"
-                        href="${crearEnlaceWhatsApp(
-                pelicula.titulo,
-                pelicula.anio
-            )}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        🎬 Quiero esta
-                    </a>
-
-                </div>
-
-            `;
-
-
-            moviesGrid.appendChild(
-                tarjeta
-            );
-
+        if (pelicula.muestra && pelicula.muestra.trim()) {
+            const botonMuestra = document.createElement("button");
+            botonMuestra.type = "button";
+            botonMuestra.className = "movie-button sample-button";
+            botonMuestra.textContent = "▶ Ver muestra";
+            botonMuestra.addEventListener("click", () => abrirMuestra(pelicula));
+            acciones.appendChild(botonMuestra);
         }
-    );
 
+        const botonWhatsApp = document.createElement("a");
+        botonWhatsApp.className = "movie-button";
+        botonWhatsApp.href = crearEnlaceWhatsApp(pelicula.titulo, pelicula.anio);
+        botonWhatsApp.target = "_blank";
+        botonWhatsApp.rel = "noopener noreferrer";
+        botonWhatsApp.textContent = "🎬 Quiero esta";
+
+        acciones.appendChild(botonWhatsApp);
+
+        info.append(titulo, calificacion, genero, descripcion, acciones);
+        tarjeta.append(posterWrapper, info);
+        moviesGrid.appendChild(tarjeta);
+    });
 }
 
-
 /* =========================================
-   BUSQUEDA
+   ACTUALIZAR CATÁLOGO
 ========================================= */
 
-searchInput.addEventListener(
-    "input",
-    () => {
+function actualizarCatalogo() {
+    actualizarTitulo();
 
-        const texto =
-            searchInput.value
-                .toLowerCase()
-                .trim();
+    if (!searchInput) return;
 
-
-        const resultados =
-            peliculas.filter(
-                pelicula => {
-
-                    return (
-
-                        pelicula.titulo
-                            .toLowerCase()
-                            .includes(texto)
-
-                        ||
-
-                        pelicula.genero
-                            .toLowerCase()
-                            .includes(texto)
-
-                    );
-
-                }
-            );
-
-
-        mostrarPeliculas(
-            resultados
-        );
-
-    }
-);
-
-
-/* =========================================
-   BOTON PEDIR PELICULA
-========================================= */
-
-const mensajeGeneral =
-    "Hola 👋, estoy buscando una película y quisiera hacer una consulta 🎬";
-
-
-generalWhatsapp.href =
-    `https://wa.me/${NUMERO_WHATSAPP}` +
-    `?text=` +
-    encodeURIComponent(
-        mensajeGeneral
+    const resultados = peliculas.filter(pelicula =>
+        perteneceACategoria(pelicula) &&
+        coincideConBusqueda(pelicula, searchInput.value)
     );
 
+    mostrarPeliculas(resultados);
+}
 
 /* =========================================
-   INICIO
+   EVENTOS E INICIO
 ========================================= */
 
-mostrarPeliculas(
-    peliculas
-);
+if (searchInput) {
+    searchInput.addEventListener("input", actualizarCatalogo);
+}
+
+if (generalWhatsapp) {
+    const mensaje =
+        "Hola 👋, estoy buscando una película y quisiera hacer una consulta 🎬";
+
+    generalWhatsapp.href =
+        `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+}
+
+crearPestanas();
+actualizarCatalogo();
+cargarDatosAutomaticos();

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,18 +17,12 @@
 
     <title>Películas a pedido</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =========================
-         ENCABEZADO
-    ========================== -->
-
+    <!-- ENCABEZADO -->
     <header class="hero">
 
         <div class="container hero-content">
@@ -49,10 +44,7 @@
                     recientes.
                 </p>
 
-                <a
-                    href="#peliculas"
-                    class="hero-button"
-                >
+                <a href="#peliculas" class="hero-button">
                     Ver películas
                 </a>
 
@@ -63,28 +55,22 @@
     </header>
 
 
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-    ========================== -->
-
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="container">
 
         <!-- BUSCADOR -->
-
         <section class="search-section">
 
             <div>
 
-                <h2>
-                    🎬 Películas
-                </h2>
+                <h2>🎬 Películas</h2>
 
                 <p>
-                    Busca una película o revisa los estrenos.
+                    Busca una película o explora
+                    nuestras categorías.
                 </p>
 
             </div>
-
 
             <div class="search-box">
 
@@ -102,23 +88,34 @@
         </section>
 
 
-        <!-- CATALOGO -->
-
+        <!-- CATÁLOGO -->
         <section
             id="peliculas"
             class="catalog-section"
         >
 
+            <!-- PESTAÑAS GENERADAS POR JAVASCRIPT -->
+            <nav
+                id="genreTabs"
+                class="genre-tabs"
+                aria-label="Categorías de películas"
+            ></nav>
+
+
+            <!-- TÍTULO Y CONTADOR -->
             <div class="section-title">
 
                 <div>
 
-                    <span class="section-label">
+                    <span
+                        id="sectionLabel"
+                        class="section-label"
+                    >
                         AHORA DISPONIBLES
                     </span>
 
-                    <h2>
-                        🔥 Estrenos
+                    <h2 id="sectionHeading">
+                        Estrenos 2026
                     </h2>
 
                 </div>
@@ -133,6 +130,7 @@
             </div>
 
 
+            <!-- PELÍCULAS -->
             <div
                 id="moviesGrid"
                 class="movies-grid"
@@ -140,21 +138,20 @@
 
 
             <!-- SIN RESULTADOS -->
-
             <div
                 id="noResults"
                 class="no-results hidden"
             >
 
-                <span>🎬</span>
+                <span>🔎</span>
 
                 <h3>
                     No encontramos esa película
                 </h3>
 
                 <p>
-                    Puedes escribirme y pedirme la película
-                    que estás buscando.
+                    Puedes escribirme y pedirme la
+                    película que estás buscando.
                 </p>
 
             </div>
@@ -162,8 +159,7 @@
         </section>
 
 
-        <!-- PEDIDO -->
-
+        <!-- PEDIDO POR WHATSAPP -->
         <section class="request-section">
 
             <div class="request-content">
@@ -178,9 +174,7 @@
                         ¿NO LA ENCUENTRAS?
                     </span>
 
-                    <h2>
-                        Puedes pedirla
-                    </h2>
+                    <h2>Puedes pedirla</h2>
 
                     <p>
                         Si no aparece en el catálogo,
@@ -192,13 +186,12 @@
 
             </div>
 
-
             <a
                 id="generalWhatsapp"
                 href="#"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="request-Get-ChildItem -Forcebutton"
+                class="request-button"
             >
                 💬 Pedir una película
             </a>
@@ -208,13 +201,65 @@
     </main>
 
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+    <!-- =====================================
+         REPRODUCTOR DE MUESTRAS DE GOOGLE DRIVE
+    ====================================== -->
+    <div
+        id="sampleModal"
+        class="sample-modal hidden"
+        aria-hidden="true"
+    >
+
+        <!-- Fondo oscuro -->
+        <div class="sample-modal-backdrop"></div>
+
+        <!-- Ventana del reproductor -->
+        <section
+            class="sample-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sampleTitle"
+        >
+
+            <!-- Cabecera -->
+            <div class="sample-modal-header">
+
+                <h2 id="sampleTitle">
+                    Ver muestra
+                </h2>
+
+                <button
+                    type="button"
+                    id="closeSample"
+                    class="sample-close-button"
+                    aria-label="Cerrar reproductor"
+                >
+                    &times;
+                </button>
+
+            </div>
+
+            <!-- Video -->
+            <div class="sample-video-container">
+
+                <iframe
+                    id="sampleFrame"
+                    title="Reproductor de muestra"
+                    src="about:blank"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+        </section>
+
+    </div>
 
 
+    <!-- JAVASCRIPT: DEBE IR DESPUÉS DEL REPRODUCTOR -->
     <script src="script.js"></script>
 
 </body>
-
 </html>
