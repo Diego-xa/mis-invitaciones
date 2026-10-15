@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Cine ♡</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="#" class="logo">Nuestro Cine <span>♡</span></a>
+        <input id="buscador" type="search" placeholder="Buscar una película...">
+    </header>
+
+    <main>
+        <section class="bienvenida">
+            <p class="etiqueta">HyD</p>
+            <h1>QUE VEMOS HOY, <span>Mi amor.</span></h1>
+            <p>a seguir forjando recuerdos uwu.</p>
+        </section>
+
+        <section class="seccion">
+            <h2>▶ Seguir viendo</h2>
+            <div id="continuar" class="catalogo"></div>
+        </section>
+
+        <section class="seccion">
+            <h2>♡ Nuestra lista</h2>
+            <div id="pendientes" class="catalogo"></div>
+        </section>
+
+        <section class="seccion">
+            <div class="barra-titulo">
+                <h2>Todo nuestro catálogo</h2>
+                <select id="filtro">
+                    <option value="todos">Todo</option>
+                    <option value="pelicula">Películas</option>
+                    <option value="serie">Series</option>
+                    <option value="anime">Anime</option>
+                </select>
+            </div>
+            <div id="catalogo" class="catalogo"></div>
+        </section>
+    </main>
+
+    <dialog id="reproductor">
+        <div class="modal-cabecera">
+            <h2 id="titulo-modal">Reproduciendo</h2>
+            <button id="cerrar" class="boton-cerrar" aria-label="Cerrar">✕</button>
+        </div>
+
+        <div class="pantalla">
+            <iframe
+                id="video"
+                src="about:blank"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                referrerpolicy="no-referrer">
+            </iframe>
+        </div>
+
+        <p class="aviso">
+            Si el video no aparece, comprueba que el enlace de Drive
+            funcione y que tengas permiso para verlo.
+        </p>
+
+        <div class="progreso">
+            <label for="minuto">¿En qué minuto nos quedamos?</label>
+            <div class="controles-progreso">
+                <input id="minuto" type="number" min="0" placeholder="Minuto">
+                <button id="guardar-progreso" class="boton principal">
+                    Guardar progreso
+                </button>
+            </div>
+            <p id="progreso-guardado"></p>
+        </div>
+
+        <div class="acciones">
+            <button id="pendiente-modal" class="boton">♡ Añadir a pendientes</button>
+            <button id="vista-modal" class="boton">✓ Marcar como vista</button>
+        </div>
+    </dialog>
+
+    <script src="catalogo.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
