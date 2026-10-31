@@ -1,8 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mis-invitaciones",
+  "main": "src/worker.js",
   "compatibility_date": "2026-08-28",
   "assets": {
-    "directory": "."
-  }
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nuestro-cine-db",
+      "database_id": "559892ca-3c88-403d-8c8d-5306e4c18e1c"
+    }
+  ]
 }

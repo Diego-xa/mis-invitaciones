@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <title>Películas a pedido</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header class="hero">
@@ -30,21 +31,12 @@
 
             <div class="search-box">
                 <span>🔎</span>
-                <input
-                    type="search"
-                    id="searchInput"
-                    placeholder="Buscar película..."
-                    autocomplete="off"
-                >
+                <input type="search" id="searchInput" placeholder="Buscar película..." autocomplete="off">
             </div>
         </section>
 
         <section id="peliculas" class="catalog-section">
-            <nav
-                id="genreTabs"
-                class="genre-tabs"
-                aria-label="Categorías de películas"
-            ></nav>
+            <nav id="genreTabs" class="genre-tabs" aria-label="Categorías de películas"></nav>
 
             <div class="section-title">
                 <div>
@@ -73,13 +65,8 @@
                 </div>
             </div>
 
-            <a
-                id="generalWhatsapp"
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="request-button"
-            >💬 Pedir una película</a>
+            <a id="generalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="request-button">💬 Pedir
+                una película</a>
         </section>
     </main>
 
@@ -87,32 +74,17 @@
     <div id="sampleModal" class="sample-modal hidden" aria-hidden="true">
         <div class="sample-modal-backdrop"></div>
 
-        <section
-            class="sample-modal-content"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="sampleTitle"
-        >
+        <section class="sample-modal-content" role="dialog" aria-modal="true" aria-labelledby="sampleTitle">
             <div class="sample-modal-header">
                 <h2 id="sampleTitle">Ver muestra</h2>
 
-                <button
-                    type="button"
-                    id="closeSample"
-                    class="sample-close-button"
-                    aria-label="Cerrar reproductor"
-                >&times;</button>
+                <button type="button" id="closeSample" class="sample-close-button"
+                    aria-label="Cerrar reproductor">&times;</button>
             </div>
 
             <div class="sample-video-container">
-                <iframe
-                    id="sampleFrame"
-                    title="Reproductor de muestra"
-                    src="about:blank"
-                    allow="autoplay; encrypted-media; picture-in-picture"
-                    allowfullscreen
-                    loading="lazy"
-                ></iframe>
+                <iframe id="sampleFrame" title="Reproductor de muestra" src="about:blank"
+                    allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
             </div>
         </section>
     </div>
@@ -120,4 +92,5 @@
     <!-- CARGAR JAVASCRIPT AL FINAL -->
     <script src="script.js"></script>
 </body>
+
 </html>

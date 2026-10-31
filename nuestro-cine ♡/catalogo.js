@@ -6,7 +6,7 @@ const peliculas = [
         tipo: "pelicula",
         anio: 2026,
         genero: "Romance",
-        portada: "",
+        portada: "/img/spiderman no way home.jpg",
         enlace: "https://drive.google.com/file/d/1_flnhI9T13wogumc2r_cr94W7riextXM/view?usp=drive_link"
     },
     {

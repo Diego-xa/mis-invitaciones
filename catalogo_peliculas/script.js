@@ -19,7 +19,7 @@ const peliculas = [
         anio: "2026",
         calificacion: 8.0,
         enlaceCalificacion: "https://www.imdb.com/title/tt22084616/",
-        calidad: "full hd",
+        calidad: "CAM",
         genero: "Marvel - Superhéroes",
         imagen: "img/Spider Man Brand New Day.webp",
         muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
@@ -105,7 +105,18 @@ const peliculas = [
         imagen: "img/Ferrari.webp",
         muestra: "",
         descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
-    }
+    },
+    {
+        titulo: "Ferrari",
+        anio: "2023",
+        calificacion: 6.4,
+        enlaceCalificacion: "https://www.imdb.com/title/tt3758542/",
+        calidad: "full hd",
+        genero: "Biografía y hechos reales - Drama y romance",
+        imagen: "img/Ferrari.webp",
+        muestra: "",
+        descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
+    },
 ];
 
 /* =========================================
