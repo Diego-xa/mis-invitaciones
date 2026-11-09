@@ -119,6 +119,7 @@ const peliculas = [
         muestra: "",
         descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
     },
+    
 ];
 
 /* =========================================
