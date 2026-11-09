@@ -15,11 +15,24 @@ const API_CATALOGO =
 
 const peliculas = [
     {
+    titulo: "El Corazón de la Bestia",
+    consultaOmdb: "Heart of the Beast",
+    anio: "2026",
+    calificacion: 7.2,
+    enlaceCalificacion: "https://www.imdb.com/title/tt7526136/",
+    posterAutomatico: "",
+    calidad: "Full HD",
+    genero: "Estrenos - Acción - Aventura",
+    imagen: "img/El Corazon de la Bestia.webp",
+    muestra: "",
+    descripcion: "Tras sobrevivir a un brutal accidente aéreo, un exsoldado de las Fuerzas Especiales y su perro de combate quedan atrapados en la implacable naturaleza salvaje de Alaska. Juntos deberán enfrentarse a condiciones extremas y luchar por sobrevivir mientras buscan el camino de regreso a casa."
+},
+    {
         titulo: "Spider Man Brand New Day",
         anio: "2026",
         calificacion: 8.0,
         enlaceCalificacion: "https://www.imdb.com/title/tt22084616/",
-        calidad: "CAM",
+        calidad: "Full HD",
         genero: "Marvel - Superhéroes",
         imagen: "img/Spider Man Brand New Day.webp",
         muestra: "https://drive.google.com/file/d/1_A3SmAgW9kfXyInOHKLUrjkRf14_tHtx/view?usp=drive_link",
@@ -106,17 +119,6 @@ const peliculas = [
         muestra: "",
         descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
     },
-    {
-        titulo: "Ferrari",
-        anio: "2023",
-        calificacion: 6.4,
-        enlaceCalificacion: "https://www.imdb.com/title/tt3758542/",
-        calidad: "full hd",
-        genero: "Biografía y hechos reales - Drama y romance",
-        imagen: "img/Ferrari.webp",
-        muestra: "",
-        descripcion: "Enzo Ferrari atraviesa una crisis que amenaza con destruir su empresa y su vida personal. Con su matrimonio al borde del colapso y el futuro de su escudería en juego, deberá arriesgarlo todo en la legendaria Mille Miglia, una carrera donde la velocidad, la ambición y el peligro pueden cambiarlo todo"
-    },
 ];
 
 /* =========================================
@@ -155,16 +157,19 @@ async function obtenerDatosAutomaticos(pelicula) {
             if (datos.error) return null;
 
             return datos;
+
         } catch (error) {
             console.warn(
                 "No se pudieron cargar datos externos:",
                 error
             );
+
             return null;
         }
     })();
 
     consultasRealizadas.set(clave, promesa);
+
     return promesa;
 }
 
@@ -222,7 +227,6 @@ const closeSample = document.getElementById("closeSample");
    PESTAÑA INICIAL
 ========================================= */
 
-// Al abrir la página, mostrar todas las películas.
 let categoriaActiva = "todos";
 
 /* =========================================
@@ -253,6 +257,7 @@ function crearEnlaceWhatsApp(titulo, anio) {
 
 function obtenerEnlaceReproduccion(enlace) {
     const url = String(enlace ?? "").trim();
+
     const coincidencia = url.match(/\/file\/d\/([^/?]+)/);
 
     if (coincidencia) {
@@ -266,6 +271,37 @@ function obtenerEnlaceReproduccion(enlace) {
     }
 
     return "";
+}
+
+/* =========================================
+   OBTENER CATEGORÍAS AUTOMÁTICAMENTE
+========================================= */
+
+function obtenerCategorias() {
+    const categorias = new Map();
+
+    peliculas.forEach(pelicula => {
+        const generos = obtenerGeneros(pelicula);
+
+        generos.forEach(genero => {
+
+            // Estrenos ya tiene su propio botón.
+            if (normalizarTexto(genero) === "estrenos") {
+                return;
+            }
+
+            const identificador = normalizarTexto(genero);
+
+            if (!categorias.has(identificador)) {
+                categorias.set(identificador, genero);
+            }
+        });
+    });
+
+    return Array.from(categorias, ([id, nombre]) => ({
+        id: `genero:${id}`,
+        nombre
+    }));
 }
 
 /* =========================================
@@ -287,19 +323,25 @@ function abrirMuestra(pelicula) {
 
     sampleTitle.textContent = `Ver muestra: ${pelicula.titulo}`;
     sampleFrame.src = enlace;
+
     sampleModal.classList.remove("hidden");
     sampleModal.setAttribute("aria-hidden", "false");
+
     document.body.classList.add("sample-modal-open");
 
-    if (closeSample) closeSample.focus();
+    if (closeSample) {
+        closeSample.focus();
+    }
 }
 
 function cerrarMuestra() {
     if (!sampleModal || !sampleFrame) return;
 
     sampleFrame.src = "about:blank";
+
     sampleModal.classList.add("hidden");
     sampleModal.setAttribute("aria-hidden", "true");
+
     document.body.classList.remove("sample-modal-open");
 }
 
@@ -326,7 +368,7 @@ document.addEventListener("keydown", evento => {
 });
 
 /* =========================================
-   PESTAÑAS: SOLO TODOS Y ESTRENOS
+   CREAR BOTONES DE CATEGORÍAS
 ========================================= */
 
 function crearPestanas() {
@@ -336,7 +378,11 @@ function crearPestanas() {
 
     const pestanas = [
         { id: "todos", nombre: "Todos" },
-        { id: "estrenos", nombre: `Estrenos ${anioEstrenos}` }
+        {
+            id: "estrenos",
+            nombre: `Estrenos ${anioEstrenos}`
+        },
+        ...obtenerCategorias()
     ];
 
     pestanas.forEach(pestana => {
@@ -346,17 +392,20 @@ function crearPestanas() {
         boton.className = "genre-tab";
         boton.textContent = pestana.nombre;
 
+        const estaActiva = categoriaActiva === pestana.id;
+
         boton.setAttribute(
             "aria-pressed",
-            String(categoriaActiva === pestana.id)
+            String(estaActiva)
         );
 
-        if (categoriaActiva === pestana.id) {
+        if (estaActiva) {
             boton.classList.add("active");
         }
 
         boton.addEventListener("click", () => {
             categoriaActiva = pestana.id;
+
             crearPestanas();
             actualizarCatalogo();
         });
@@ -365,13 +414,33 @@ function crearPestanas() {
     });
 }
 
+/* =========================================
+   FILTRAR POR CATEGORÍA
+========================================= */
+
 function perteneceACategoria(pelicula) {
+
+    // Mostrar todas las películas.
     if (categoriaActiva === "todos") {
         return true;
     }
 
+    // Mostrar solamente los estrenos del año seleccionado.
     if (categoriaActiva === "estrenos") {
         return String(pelicula.anio).trim() === String(anioEstrenos);
+    }
+
+    // Mostrar películas de la categoría seleccionada.
+    if (categoriaActiva.startsWith("genero:")) {
+
+        const generoSeleccionado = categoriaActiva.replace(
+            "genero:",
+            ""
+        );
+
+        return obtenerGeneros(pelicula).some(
+            genero => normalizarTexto(genero) === generoSeleccionado
+        );
     }
 
     return true;
@@ -388,9 +457,8 @@ function coincideConBusqueda(pelicula, texto) {
 
     const generos = obtenerGeneros(pelicula).map(normalizarTexto);
 
-    // Si la búsqueda coincide con un género existente,
-    // mostrar solo las películas clasificadas en ese género.
     if (!busqueda.includes(" ")) {
+
         const coincideGenero = generos.some(
             genero => genero.includes(busqueda)
         );
@@ -429,11 +497,25 @@ function actualizarTitulo() {
     if (!sectionHeading || !sectionLabel) return;
 
     if (categoriaActiva === "estrenos") {
+
         sectionHeading.textContent = `🔥 Estrenos ${anioEstrenos}`;
         sectionLabel.textContent = "PELÍCULAS DEL AÑO";
-    } else {
+
+    } else if (categoriaActiva === "todos") {
+
         sectionHeading.textContent = "🎬 Todas las películas";
         sectionLabel.textContent = "CATÁLOGO COMPLETO";
+
+    } else {
+
+        const categoriaSeleccionada = obtenerCategorias().find(
+            categoria => categoria.id === categoriaActiva
+        );
+
+        if (categoriaSeleccionada) {
+            sectionHeading.textContent = `🎬 ${categoriaSeleccionada.nombre}`;
+            sectionLabel.textContent = "PELÍCULAS POR CATEGORÍA";
+        }
     }
 }
 
@@ -443,6 +525,7 @@ function actualizarTitulo() {
 
 function crearCalificacion(pelicula) {
     const contenedor = document.createElement("div");
+
     contenedor.className = "movie-rating";
 
     const notaValor = Number(pelicula.calificacion);
@@ -454,6 +537,7 @@ function crearCalificacion(pelicula) {
     ) {
         contenedor.classList.add("rating-unavailable");
         contenedor.textContent = "Sin calificación";
+
         return contenedor;
     }
 
@@ -463,12 +547,15 @@ function crearCalificacion(pelicula) {
     );
 
     const estrellas = document.createElement("span");
+
     estrellas.className = "rating-stars";
+
     estrellas.textContent =
         "★".repeat(estrellasLlenas) +
         "☆".repeat(5 - estrellasLlenas);
 
     const nota = document.createElement("span");
+
     nota.className = "rating-score";
     nota.textContent = `${notaValor.toFixed(1)}/10`;
 
@@ -504,13 +591,19 @@ function mostrarPeliculas(lista) {
     noResults.classList.toggle("hidden", lista.length !== 0);
 
     lista.forEach(pelicula => {
+
+        /* TARJETA */
+
         const tarjeta = document.createElement("article");
         tarjeta.className = "movie-card";
+
+        /* IMAGEN */
 
         const posterWrapper = document.createElement("div");
         posterWrapper.className = "movie-poster-wrapper";
 
         const imagen = document.createElement("img");
+
         imagen.className = "movie-poster";
         imagen.alt = `Póster de ${pelicula.titulo}`;
         imagen.loading = "lazy";
@@ -527,6 +620,8 @@ function mostrarPeliculas(lista) {
             }
         });
 
+        /* AÑO Y CALIDAD */
+
         const meta = document.createElement("div");
         meta.className = "movie-meta";
 
@@ -539,7 +634,10 @@ function mostrarPeliculas(lista) {
         calidad.textContent = pelicula.calidad;
 
         meta.append(anio, calidad);
+
         posterWrapper.append(imagen, meta);
+
+        /* INFORMACIÓN */
 
         const info = document.createElement("div");
         info.className = "movie-info";
@@ -558,10 +656,14 @@ function mostrarPeliculas(lista) {
         descripcion.className = "movie-description";
         descripcion.textContent = pelicula.descripcion;
 
+        /* BOTONES */
+
         const acciones = document.createElement("div");
         acciones.className = "movie-actions";
 
+        // Botón de muestra.
         if (pelicula.muestra && pelicula.muestra.trim()) {
+
             const botonMuestra = document.createElement("button");
 
             botonMuestra.type = "button";
@@ -576,18 +678,23 @@ function mostrarPeliculas(lista) {
             acciones.appendChild(botonMuestra);
         }
 
+        // Botón de WhatsApp.
         const botonWhatsApp = document.createElement("a");
 
         botonWhatsApp.className = "movie-button";
+
         botonWhatsApp.href = crearEnlaceWhatsApp(
             pelicula.titulo,
             pelicula.anio
         );
+
         botonWhatsApp.target = "_blank";
         botonWhatsApp.rel = "noopener noreferrer";
         botonWhatsApp.textContent = "🎬 Quiero esta";
 
         acciones.appendChild(botonWhatsApp);
+
+        /* UNIR ELEMENTOS */
 
         info.append(
             titulo,
@@ -598,6 +705,7 @@ function mostrarPeliculas(lista) {
         );
 
         tarjeta.append(posterWrapper, info);
+
         moviesGrid.appendChild(tarjeta);
     });
 }
@@ -635,6 +743,11 @@ if (generalWhatsapp) {
         `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
 }
 
+// Crear los botones de categorías.
 crearPestanas();
+
+// Mostrar todas las películas al abrir la página.
 actualizarCatalogo();
+
+// Consultar datos externos si la API está configurada.
 cargarDatosAutomaticos();
