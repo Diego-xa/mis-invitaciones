@@ -1,153 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streia | Nuestra Comunidad</title>
+    <title>Streia | Club de Fans</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <header class="topbar">
-        <a class="logo" href="#">✦ Streeia <span>♥</span></a>
+        <a href="#" class="logo">STREIA<span>♡</span></a>
 
         <nav>
-            <a href="#top">Top Yaperos</a>
-            <a href="#gracias">Agradecimientos</a>
-            <button id="admin-toggle" type="button">Administrar</button>
+            <a href="#club">Club de Fans</a>
+            <a href="#agradecimientos">Agradecimientos</a>
         </nav>
     </header>
 
     <main>
-
         <section class="hero">
-            <div class="hero-text">
-                <p class="eyebrow">✦ NUESTRA COMUNIDAD ✦</p>
+            <div class="hero-content">
+                <span class="hero-label">♡ BIENVENIDO A NUESTRA COMUNIDAD ♡</span>
 
-                <h1>
-                    Un lugar para
-                    <em>agradecer</em> 💗
-                </h1>
+                <h1>Un lugar para <span>pertenecer</span></h1>
 
                 <p>
-                    Gracias por acompañar, apoyar y llenar
-                    nuestros Lives de momentos bonitos.
-                    Esta comunidad también es tuya.
+                    Un pequeño espacio creado con mucho cariño para
+                    agradecer a todas las personas que forman parte
+                    de esta hermosa comunidad.
                 </p>
 
-                <a class="main-button" href="#top">
-                    Ver el Top de hoy ↓
-                </a>
+                <a href="#club" class="hero-button">Conocer el club ♡</a>
             </div>
 
             <div class="hero-character">
-                <img src="assets/streia.png" alt="Streia"
-                     onerror="this.style.display='none'">
-                <span class="sparkle one">✦</span>
-                <span class="sparkle two">♡</span>
-                <span class="sparkle three">✧</span>
+                <!-- CAMBIA streia.png POR EL NOMBRE REAL DE TU FOTO -->
+                <img src="img/foto .jpg" alt="Foto de perfil de Streia">
             </div>
         </section>
 
-
-        <section class="section" id="top">
-            <div class="section-title">
-                <p class="eyebrow">✦ APOYOS DE HOY ✦</p>
-                <h2>Top <em>Yaperos</em> 💜</h2>
-                <p>Un pequeño reconocimiento a quienes apoyaron hoy.</p>
-                <span class="date-pill" id="today"></span>
+        <section class="section" id="club">
+            <div class="section-heading">
+                <span class="section-label">NUESTRA COMUNIDAD</span>
+                <h2>Club de Fans 💜</h2>
+                <p>Cada apoyo suma y cada persona tiene un lugar especial.</p>
             </div>
 
-            <div id="podium" class="podium"></div>
-            <div id="ranking" class="ranking"></div>
+            <div class="podium" id="podium"></div>
 
-            <p class="note">
-                El ranking se reinicia diariamente según la hora de Perú.
-                Los puntos y niveles acumulados nunca se reinician.
-            </p>
+            <div class="ranking-container">
+                <h3>Ranking de miembros</h3>
+                <div id="ranking"></div>
+            </div>
         </section>
 
-
-        <section class="section thanks" id="gracias">
-            <div class="section-title">
-                <p class="eyebrow">✦ GRACIAS POR SER PARTE ✦</p>
-                <h2>Muro de <em>agradecimientos</em> 🌷</h2>
-                <p>Cada persona deja una huellita en esta comunidad.</p>
+        <section class="section thanks-section" id="agradecimientos">
+            <div class="section-heading">
+                <span class="section-label">CON MUCHO CARIÑO</span>
+                <h2>Agradecimientos ♡</h2>
+                <p>Gracias por acompañarnos y formar parte de esta aventura.</p>
             </div>
 
-            <div id="members" class="members"></div>
+            <div class="members" id="agradecidos"></div>
         </section>
-
-
-        <section id="admin-panel" class="admin-panel hidden">
-            <div class="section-title">
-                <p class="eyebrow">✦ SOLO PARA STREIA ✦</p>
-                <h2>Panel de <em>administración</em></h2>
-                <p>Registra los nuevos aportes de la comunidad.</p>
-            </div>
-
-            <div class="admin-grid">
-                <form id="donation-form" class="form-card">
-                    <h3>💜 Registrar un Yape</h3>
-
-                    <label>
-                        Nombre o apodo
-                        <input id="donor-name" maxlength="40"
-                               required placeholder="Ej. StreiaFan">
-                    </label>
-
-                    <label>
-                        Monto en soles
-                        <input id="donor-amount" type="number"
-                               min="0.01" step="0.01"
-                               required placeholder="10.00">
-                    </label>
-
-                    <label>
-                        Puntos que recibirá
-                        <input id="donor-points" type="text"
-                               disabled placeholder="Automático">
-                    </label>
-
-                    <label>
-                        Mensaje opcional
-                        <input id="donor-message" maxlength="100"
-                               placeholder="¡Gracias por el apoyo!">
-                    </label>
-
-                    <label>
-                        Foto de perfil
-                        <input id="donor-photo" type="file" accept="image/*">
-                    </label>
-
-                    <button class="main-button" type="submit">
-                        Guardar aporte 💗
-                    </button>
-                </form>
-            </div>
-
-            <div class="admin-actions">
-                <button id="clear-today" class="secondary-button" type="button">
-                    Borrar aportes de hoy
-                </button>
-
-                <button id="clear-all" class="danger-button" type="button">
-                    Borrar todos los datos
-                </button>
-            </div>
-
-            <p id="status" class="status"></p>
-
-            <p class="note">
-                Los registros de esta versión se guardan en este navegador.
-            </p>
-        </section>
-
     </main>
 
     <footer>
-        <strong>STREIA <span>♥</span></strong>
-        <p>Hecho con cariño para nuestra comunidad.</p>
+        <p>Hecho con mucho amor para la comunidad de Streia ♡</p>
     </footer>
 
     <script src="script.js"></script>

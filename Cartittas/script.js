@@ -12,7 +12,8 @@ const cartas = [
     },
     {
         titulo: "Recordatorio",
-        mensaje: "no olvides las cosas que debemos  mejorar mi amor, ambos debemos hacerlo para fortalecer lo nuestro corazoncito ❤️"
+        mensaje: "no olvides las cosas que debemos  mejorar mi amor, ambos debemos hacerlo para fortalecer lo nuestro corazoncito ❤️",
+        firma:"sigamos creciendo mi bebe"
     },
 
     {
