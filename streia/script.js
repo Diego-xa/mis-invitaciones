@@ -16,14 +16,14 @@ const XP_POR_NIVEL = 25;
 
 const MIEMBROS = [
     {
-        nombre: "Diego",
+        nombre: "Diego D' Streia ⭐️ 💙",
         puntos: 20,
-        foto: "",
+        foto: "img/fondo negro.png",
         mensaje: "Gracias por formar parte."
     },
     {
         nombre: "Steita",
-        puntos: 500,
+        puntos: 100,
         foto: "",
         mensaje: "Una persona especial de la comunidad."
     },
